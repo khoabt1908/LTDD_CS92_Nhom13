@@ -51,6 +51,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/login_button"
@@ -60,11 +61,12 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             tools:ignore="SpeakableTextPresentCheck"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/signUpButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Sign Up"
             android:textStyle="bold"
-            android:textColor="@color/main_color"
+            android:textColor="@drawable/button_text_color"
             android:background="@drawable/signup_button"
             tools:ignore="SpeakableTextPresentCheck"/>
     </LinearLayout>
