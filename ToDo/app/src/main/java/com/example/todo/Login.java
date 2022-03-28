@@ -1,14 +1,14 @@
 package com.example.todo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.text.Html;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
+import android.widget.CheckBox;
+import android.widget.CheckedTextView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.textfield.TextInputLayout;
 
 public class Login extends AppCompatActivity {
 
@@ -16,6 +16,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-    }
 
+    }
 }

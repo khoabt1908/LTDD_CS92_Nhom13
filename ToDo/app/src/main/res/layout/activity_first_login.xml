@@ -46,28 +46,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_weight="2.5"
+        android:gravity="center"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:background="@drawable/login_button"
             android:text="Login"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            tools:ignore="SpeakableTextPresentCheck"/>
+            tools:ignore="SpeakableTextPresentCheck" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signUpButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Sign Up"
-            android:textStyle="bold"
-            android:textColor="@drawable/button_text_color"
             android:background="@drawable/signup_button"
-            tools:ignore="SpeakableTextPresentCheck"/>
+            android:text="Sign Up"
+            android:textColor="@drawable/button_text_color"
+            android:textStyle="bold"
+            tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
 </LinearLayout>
