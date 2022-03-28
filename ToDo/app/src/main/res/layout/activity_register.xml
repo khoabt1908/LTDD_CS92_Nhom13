@@ -5,11 +5,11 @@
     android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="36dp"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
+    android:padding="36dp"
     tools:context=".Register">
 
     <LinearLayout
@@ -19,28 +19,34 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/logo"
-            android:contentDescription="TODO" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:background="@drawable/logo"
+                android:contentDescription="TODO"
+                android:scaleType="centerInside" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="36dp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fullName"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:hint="Full Name"
-                android:textColorHint="#D4D4D3">
+                android:textColorHint="@color/main_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -49,12 +55,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:hint="Email"
-                android:textColorHint="#D4D4D3">
+                android:textColorHint="@color/main_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -63,12 +69,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:hint="Password"
-                android:textColorHint="#D4D4D3"
+                android:textColorHint="@color/main_color"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -76,6 +82,14 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/loginButton"
