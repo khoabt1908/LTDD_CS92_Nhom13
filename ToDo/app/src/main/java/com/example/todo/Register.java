@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +17,7 @@ public class Register extends AppCompatActivity {
     TextView textViewPolicy;
     TextView textViewHaveAccount;
     LinearLayout mainContainer;
-
+    Button signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class Register extends AppCompatActivity {
         textViewPolicy = (TextView) findViewById(R.id.confirm);
         textViewHaveAccount = (TextView) findViewById(R.id.haveAccount);
         mainContainer = (LinearLayout) findViewById(R.id.mainContainer);
-
+        signUpButton = (Button) findViewById(R.id.signUpButton);
         Init();
 
     }
@@ -39,6 +40,14 @@ public class Register extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Main.class);
+                startActivity(intent);
+            }
+        });
+
         mainContainer.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

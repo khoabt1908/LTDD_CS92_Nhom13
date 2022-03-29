@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ToDo</string>
     <string name="app_slogan">We’ve done the hard work for you and thought up co</string>
+    <string name="task_list">Quản lý</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="user">Người dùng</string>
 </resources>
