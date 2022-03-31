@@ -4,4 +4,23 @@
     <string name="task_list">Quản lý</string>
     <string name="search">Tìm kiếm</string>
     <string name="user">Người dùng</string>
+    <string name="createListDrawer">Danh sách mới</string>
+    <string name="createListFilterDrawer">Danh sách bộ lọc mới</string>
+    <string name="editListDrawer">Chỉnh sửa danh sách</string>
+    <string name="page_title">To Do</string>
+    <string name="favorite"></string>
+    <string name="searchBar"></string>
+    <string name="more"></string>
+    <string name="content_description_favorite">List yêu thích của bạn</string>
+    <string name="content_description_search">Tìm kiếm</string>
+    <string name="content_description_more">Thêm</string>
+    <string name="header_title_Drawer">TASK CỦA BẠN NÈ</string>
+    <string name="recentlyListTextDrawer"></string>
+    <string name="stickListDrawer">Nhãn</string>
+    <string name="deleteListDrawer">Các mục đã xóa</string>
+    <string name="accountVIPDrawer">Nâng cấp lên Bản cao cấp</string>
+    <string name="donationDrawer">Đóng góp</string>
+    <string name="helpDrawer">Trợ giúp</string>
+    <string name="settingDrawer">Cài đặt</string>
+
 </resources>

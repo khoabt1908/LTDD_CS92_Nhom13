@@ -13,6 +13,59 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/drawerLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/topAppBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="@string/page_title"
+                    app:menu="@menu/top_app_bar"
+                    app:navigationIcon="@drawable/ic_outline_format_list_bulleted_24"
+                    style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navigationView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:menu="@menu/navigation_drawer"
+                app:headerLayout="@layout/header_navigation_drawer"/>
+
+        </LinearLayout>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/navigationView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        app:menu="@menu/navigation_drawer"-->
+<!--        app:headerLayout="@layout/header_navigation_drawer"/>-->
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
