@@ -3,8 +3,11 @@ package com.example.todo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,10 +32,10 @@ public class Main extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         Menu menuNav = navigationView.getMenu();
         MenuItem logoutItem = menuNav.findItem(R.id.logOutDrawer);
-
         logoutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                drawerLayout.close();
                 new MaterialAlertDialogBuilder(Main.this)
                         .setTitle("Xác nhận")
                         .setMessage("Bạn có chắc chắn đăng xuất ?")
@@ -58,10 +61,13 @@ public class Main extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item == logoutItem)
+                    return false;
                 item.setChecked(true);
                 drawerLayout.close();
                 return true;
             }
         });
     }
+
 }

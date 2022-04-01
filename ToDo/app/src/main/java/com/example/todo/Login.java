@@ -47,6 +47,7 @@ public class Login extends AppCompatActivity {
         loading = (CircularProgressIndicator) findViewById(R.id.loading);
         signInButton = (Button) findViewById(R.id.loginButton);
         forgotPass = (TextView) findViewById(R.id.forgotPass);
+        fAuth = FirebaseAuth.getInstance();
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,44 +58,48 @@ public class Login extends AppCompatActivity {
                     txtEmail.setError("You need to enter email");
                     return;
                 } else {
-                    txtEmail.setErrorEnabled(false);
+                    if (txtEmail.isErrorEnabled())
+                        txtEmail.setErrorEnabled(false);
                 }
                 if (!isValid(email)) {
                     txtEmail.setError("The email invalid");
                     return;
                 } else {
-                    txtEmail.setErrorEnabled(false);
+                    if (txtEmail.isErrorEnabled())
+                        txtEmail.setErrorEnabled(false);
                 }
                 if (TextUtils.isEmpty(password)) {
                     txtPass.setError("You need to enter your password");
                     return;
                 } else {
-                    txtPass.setErrorEnabled(false);
+                    if (txtPass.isErrorEnabled())
+                        txtPass.setErrorEnabled(false);
                 }
                 if (password.length() < 6) {
                     txtPass.setError("Password must be more 6 characters");
                     return;
                 } else {
-                    txtPass.setErrorEnabled(false);
+                    if (txtPass.isErrorEnabled())
+                        txtPass.setErrorEnabled(false);
                 }
-
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(Login.this, "login thanh cong", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), Main.class));
-                        }
-                        else {
-
-                            Toast.makeText(Login.this, "error"+task.getException().toString(), Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
                 loading.setVisibility(View.VISIBLE);
                 signInButton.setVisibility(View.INVISIBLE);
                 forgotPass.setVisibility(View.INVISIBLE);
+                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Login.this, "login thanh cong", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), Main.class));
+                        } else {
+                            Toast.makeText(Login.this, "error" + task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            loading.setVisibility(View.INVISIBLE);
+                            signInButton.setVisibility(View.VISIBLE);
+                            forgotPass.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
 
             }
         });

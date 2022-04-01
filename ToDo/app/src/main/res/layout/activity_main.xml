@@ -7,12 +7,6 @@
     android:orientation="vertical"
     tools:context=".Main">
 
-    <FrameLayout
-        android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
@@ -30,12 +24,13 @@
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:layout_width="match_parent"
+                    app:menu="@menu/top_app_bar"
                     android:id="@+id/topAppBar"
                     android:layout_height="?attr/actionBarSize"
                     app:title="@string/page_title"
-                    app:menu="@menu/top_app_bar"
                     app:navigationIcon="@drawable/ic_outline_format_list_bulleted_24"
-                    style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+                    style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                    />
 
             </com.google.android.material.appbar.AppBarLayout>
 

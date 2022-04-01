@@ -30,6 +30,11 @@ public class Register extends AppCompatActivity {
     private TextInputLayout txtEmail, txtPass, txtName;
     private FirebaseAuth fAuth;
 
+    static boolean isValid(String email) {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +52,6 @@ public class Register extends AppCompatActivity {
 
         Init();
 
-    }
-
-    static boolean isValid(String email) {
-        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-        return email.matches(regex);
     }
 
     void Init() {
@@ -75,26 +75,23 @@ public class Register extends AppCompatActivity {
                 if (TextUtils.isEmpty(email)) {
                     txtEmail.setError("You need to enter email");
                     return;
-                } else {
-                    txtEmail.setErrorEnabled(false);
                 }
                 if (!isValid(email)) {
                     txtEmail.setError("The email invalid");
                     return;
-                } else {
-                    txtEmail.setErrorEnabled(false);
                 }
                 if (TextUtils.isEmpty(password)) {
                     txtPass.setError("You need to enter your password");
                     return;
                 } else {
-                    txtPass.setErrorEnabled(false);
+                    txtEmail.setError("");
                 }
                 if (password.length() < 6) {
                     txtPass.setError("Password must be more 6 characters");
                     return;
-                } else {
-                    txtPass.setErrorEnabled(false);
+                }
+                else {
+                    txtPass.setError("");
                 }
                 loading.setVisibility(View.VISIBLE);
                 signUpButton.setVisibility(View.INVISIBLE);
@@ -106,11 +103,11 @@ public class Register extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), Main.class));
                         } else {
                             Toast.makeText(Register.this, "loi" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
+                            loading.setVisibility(View.INVISIBLE);
+                            signUpButton.setVisibility(View.VISIBLE);
                         }
                     }
                 });
-
             }
         });
 
