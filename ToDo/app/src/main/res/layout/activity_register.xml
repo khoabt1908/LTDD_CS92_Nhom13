@@ -37,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -44,8 +45,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:hint="Full Name"
+                android:hint="Full Name (Optional )"
+                android:layout_marginBottom="20dp"
                 android:textColorHint="@color/main_color">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -55,11 +56,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email"
+                android:inputType="textEmailAddress"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:hint="Email"
+                app:errorEnabled="true"
                 android:textColorHint="@color/main_color">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -72,11 +74,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:hint="Password"
                 android:textColorHint="@color/main_color"
                 app:endIconMode="password_toggle">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,7 +89,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signUpButton"
@@ -101,6 +103,15 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 tools:ignore="SpeakableTextPresentCheck" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="-50dp"
+                android:indeterminate="true"
+                android:visibility="invisible" />
+
         </LinearLayout>
 
     </LinearLayout>

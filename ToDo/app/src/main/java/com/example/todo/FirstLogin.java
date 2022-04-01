@@ -1,23 +1,28 @@
 package com.example.todo;
 
-import android.app.ActionBar;
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class FirstLogin extends AppCompatActivity {
     Button loginButton;
-Button signUpButton;
+    Button signUpButton;
+    private FirebaseAuth fAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
+        fAuth = FirebaseAuth.getInstance();
+        if (fAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), Main.class));
+            finish();
+        }
         setButtonScreen();
     }
 
@@ -32,6 +37,16 @@ Button signUpButton;
                 startActivity(intent);
             }
         });
+
+        loginButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Main.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

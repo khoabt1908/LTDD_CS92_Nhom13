@@ -20,6 +20,6 @@
         android:id="@+id/more"
         android:title="@string/more"
         android:contentDescription="@string/content_description_more"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
 </menu>

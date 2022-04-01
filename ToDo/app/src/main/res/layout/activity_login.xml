@@ -53,8 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:hint="Email"
-                    android:textColorHint="@color/main_color"
-             >
+                    android:textColorHint="@color/main_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -66,11 +65,9 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:hint="Password"
                     android:textColorHint="@color/main_color"
-                    app:endIconMode="password_toggle"
-                    >
+                    app:endIconMode="password_toggle">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -97,7 +94,16 @@
                     android:textStyle="bold"
                     tools:ignore="SpeakableTextPresentCheck" />
 
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="-50dp"
+                    android:indeterminate="true"
+                    android:visibility="invisible" />
+
                 <TextView
+                    android:id="@+id/forgotPass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"

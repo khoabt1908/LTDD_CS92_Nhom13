@@ -11,4 +11,5 @@
     <color name="main_color">#2ea8df</color>
     <color name="main_light_color">#71d9ff</color>
     <color name="main_dark_color">#0079ad</color>
+    <color name="error">#B71C1C</color>
 </resources>

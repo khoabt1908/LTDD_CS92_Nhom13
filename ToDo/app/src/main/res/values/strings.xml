@@ -8,9 +8,9 @@
     <string name="createListFilterDrawer">Danh sách bộ lọc mới</string>
     <string name="editListDrawer">Chỉnh sửa danh sách</string>
     <string name="page_title">To Do</string>
-    <string name="favorite"></string>
-    <string name="searchBar"></string>
-    <string name="more"></string>
+    <string name="favorite">Yêu thích</string>
+    <string name="searchBar">Tìm kiếm</string>
+    <string name="more">Thêm</string>
     <string name="content_description_favorite">List yêu thích của bạn</string>
     <string name="content_description_search">Tìm kiếm</string>
     <string name="content_description_more">Thêm</string>
@@ -22,5 +22,6 @@
     <string name="donationDrawer">Đóng góp</string>
     <string name="helpDrawer">Trợ giúp</string>
     <string name="settingDrawer">Cài đặt</string>
+    <string name="logoutDrawer">Đăng xuất</string>
 
 </resources>
