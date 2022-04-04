@@ -3,6 +3,7 @@ package com.example.todo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,12 +17,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
     private TextView textViewPolicy, textViewHaveAccount;
@@ -30,6 +37,8 @@ public class Register extends AppCompatActivity {
     private CircularProgressIndicator loading;
     private TextInputLayout txtEmail, txtPass, txtName;
     private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
+    private String userId;
 
     static boolean isValid(String email) {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
@@ -50,6 +59,7 @@ public class Register extends AppCompatActivity {
         txtPass = (TextInputLayout) findViewById(R.id.password);
         txtName = (TextInputLayout) findViewById(R.id.fullName);
         fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         Init();
 
@@ -70,7 +80,7 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
 
 
-//                String fullName = txtName.getEditText().getText().toString().trim();
+                String fullName = txtName.getEditText().getText().toString().trim();
                 String password = txtPass.getEditText().getText().toString().trim();
                 String email = txtEmail.getEditText().getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
@@ -90,8 +100,7 @@ public class Register extends AppCompatActivity {
                 if (password.length() < 6) {
                     txtPass.setError("Password must be more 6 characters");
                     return;
-                }
-                else {
+                } else {
                     txtPass.setError("");
                 }
                 loading.setVisibility(View.VISIBLE);
@@ -100,7 +109,18 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(Register.this, "User create", Toast.LENGTH_SHORT).show();
+                            userId = fAuth.getCurrentUser().getUid();
+
+                            DocumentReference documentReference = fStore.collection("users").document(userId);
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("fName", fullName);
+                            user.put("email", email);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d("TAG", "On Success user Profile is create for" + userId);
+                                }
+                            });
                             startActivity(new Intent(getApplicationContext(), Main.class));
                         } else {
                             new MaterialAlertDialogBuilder(Register.this)
