@@ -17,6 +17,7 @@ import androidx.core.text.HtmlCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -92,7 +93,14 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, "login thanh cong", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), Main.class));
                         } else {
-                            Toast.makeText(Login.this, "error" + task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            new MaterialAlertDialogBuilder(Login.this)
+                                    .setTitle("Lỗi")
+                                    .setMessage(task.getException().toString())
+                                    .setNegativeButton("Đóng", (dialogInterface, i) -> {
+                                        txtEmail.getEditText().setText("");
+                                        txtPass.getEditText().setText("");
+                                    })
+                                    .show();
                             loading.setVisibility(View.INVISIBLE);
                             signInButton.setVisibility(View.VISIBLE);
                             forgotPass.setVisibility(View.VISIBLE);

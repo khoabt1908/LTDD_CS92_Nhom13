@@ -17,6 +17,7 @@ import androidx.core.text.HtmlCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -102,7 +103,14 @@ public class Register extends AppCompatActivity {
                             Toast.makeText(Register.this, "User create", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), Main.class));
                         } else {
-                            Toast.makeText(Register.this, "loi" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            new MaterialAlertDialogBuilder(Register.this)
+                                    .setTitle("Lỗi")
+                                    .setMessage(task.getException().getMessage())
+                                    .setNegativeButton("Đóng", (dialogInterface, i) -> {
+                                        txtEmail.getEditText().setText("");
+                                        txtPass.getEditText().setText("");
+                                    })
+                                    .show();
                             loading.setVisibility(View.INVISIBLE);
                             signUpButton.setVisibility(View.VISIBLE);
                         }
