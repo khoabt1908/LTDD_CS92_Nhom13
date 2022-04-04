@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -95,7 +97,7 @@ public class Login extends AppCompatActivity {
                         } else {
                             new MaterialAlertDialogBuilder(Login.this)
                                     .setTitle("Lỗi")
-                                    .setMessage(task.getException().toString())
+                                    .setMessage(task.getException().getMessage())
                                     .setNegativeButton("Đóng", (dialogInterface, i) -> {
                                         txtEmail.getEditText().setText("");
                                         txtPass.getEditText().setText("");
@@ -108,6 +110,44 @@ public class Login extends AppCompatActivity {
                     }
                 });
 
+
+            }
+        });
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String email = txtEmail.getEditText().getText().toString().trim();
+                new MaterialAlertDialogBuilder(Login.this)
+                        .setTitle("Reset Password?")
+                        .setMessage(email)
+                        .setNegativeButton("Huỷ", (dialogInterface, i) -> {
+                        })
+                        .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
+                            loading.setVisibility(View.VISIBLE);
+                            signInButton.setVisibility(View.INVISIBLE);
+                            forgotPass.setVisibility(View.INVISIBLE);
+                            fAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(Login.this, "Reset link sent to your email", Toast.LENGTH_SHORT).show();
+                                    loading.setVisibility(View.INVISIBLE);
+                                    signInButton.setVisibility(View.VISIBLE);
+                                    forgotPass.setVisibility(View.VISIBLE);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Login.this, "Error! Reset link is not sent", Toast.LENGTH_SHORT).show();
+                                    loading.setVisibility(View.INVISIBLE);
+                                    signInButton.setVisibility(View.VISIBLE);
+                                    forgotPass.setVisibility(View.VISIBLE);
+                                }
+                            });
+
+                        })
+                        .show();
 
             }
         });
