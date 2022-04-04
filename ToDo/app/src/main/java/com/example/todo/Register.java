@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -24,6 +25,7 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -36,7 +38,7 @@ public class Register extends AppCompatActivity {
     private Button signUpButton;
     private CircularProgressIndicator loading;
     private TextInputLayout txtEmail, txtPass, txtName;
-    private FirebaseAuth fAuth;
+    private FirebaseAuth fAuth, mAuthListener;
     private FirebaseFirestore fStore;
     private String userId;
 
@@ -62,10 +64,10 @@ public class Register extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         Init();
-
     }
 
-    void Init() {
+
+    private void Init() {
         textViewPolicy.setText(HtmlCompat.fromHtml("<font color=#666666>By signing up you accept the </font><font color=#0173B7>  <b><u>Terms & Conditions</u></b></font><font color=#666666> and the <u></font><b><font color=#0173B7>Privacy Policy</font></u></b></font>", 0));
         textViewHaveAccount.setText(HtmlCompat.fromHtml("<font color=#666666>Already have an account</font> <u></font><b><font color=#0173B7>Log In</font></u></b></font>", 0));
         textViewHaveAccount.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +111,20 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            userId = fAuth.getCurrentUser().getUid();
+                            final FirebaseUser currentUser = fAuth.getCurrentUser();
 
+                            currentUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(Register.this, "Da gui email xac nhan", Toast.LENGTH_SHORT) .show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Register.this, "Error , Email not sent", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            userId = fAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userId);
                             Map<String, Object> user = new HashMap<>();
                             user.put("fName", fullName);
@@ -121,7 +135,7 @@ public class Register extends AppCompatActivity {
                                     Log.d("TAG", "On Success user Profile is create for" + userId);
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(), Main.class));
+                            startActivity(new Intent(getApplicationContext(), Login.class));
                         } else {
                             new MaterialAlertDialogBuilder(Register.this)
                                     .setTitle("Lỗi")

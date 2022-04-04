@@ -23,5 +23,6 @@
     <string name="helpDrawer">Trợ giúp</string>
     <string name="settingDrawer">Cài đặt</string>
     <string name="logoutDrawer">Đăng xuất</string>
+    <string name="delete">Xoá</string>
 
 </resources>

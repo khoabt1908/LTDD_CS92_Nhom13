@@ -19,7 +19,7 @@ public class FirstLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_login);
         fAuth = FirebaseAuth.getInstance();
-        if (fAuth.getCurrentUser() != null) {
+        if (fAuth.getCurrentUser() != null && fAuth.getCurrentUser().isEmailVerified()) {
             startActivity(new Intent(getApplicationContext(), Main.class));
             finish();
         }

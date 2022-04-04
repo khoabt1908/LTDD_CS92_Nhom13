@@ -24,6 +24,7 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
     private TextView textViewDontHaveAccount, forgotPass;
@@ -92,8 +93,23 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(Login.this, "login thanh cong", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), Main.class));
+                            FirebaseUser currentUser = fAuth.getCurrentUser();
+                            if (currentUser.isEmailVerified()) {
+                                startActivity(new Intent(getApplicationContext(), Main.class));
+                            } else {
+                                new MaterialAlertDialogBuilder(Login.this)
+                                        .setTitle("Lỗi")
+                                        .setMessage("Vui lòng xác nhận mail trước khi đăng nhập !")
+                                        .setNegativeButton("Đóng", (dialogInterface, i) -> {
+                                            txtEmail.getEditText().setText("");
+                                            txtPass.getEditText().setText("");
+                                        })
+                                        .show();
+                                loading.setVisibility(View.INVISIBLE);
+                                signInButton.setVisibility(View.VISIBLE);
+                                forgotPass.setVisibility(View.VISIBLE);
+                            }
+
                         } else {
                             new MaterialAlertDialogBuilder(Login.this)
                                     .setTitle("Lỗi")
