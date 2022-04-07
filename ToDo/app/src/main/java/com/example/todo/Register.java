@@ -81,7 +81,6 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 String fullName = txtName.getEditText().getText().toString().trim();
                 String password = txtPass.getEditText().getText().toString().trim();
                 String email = txtEmail.getEditText().getText().toString().trim();
@@ -132,7 +131,7 @@ public class Register extends AppCompatActivity {
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Log.d("TAG", "On Success user Profile is create for" + userId);
+                                    Log.d("TAG", "On Success user  Profileis create for" + userId);
                                 }
                             });
                             startActivity(new Intent(getApplicationContext(), Login.class));

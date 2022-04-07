@@ -15,6 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,6 +56,9 @@ public class Login extends AppCompatActivity {
         signInButton = (Button) findViewById(R.id.loginButton);
         forgotPass = (TextView) findViewById(R.id.forgotPass);
         fAuth = FirebaseAuth.getInstance();
+
+//        createRequest();
+
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +142,8 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
 
                 String email = txtEmail.getEditText().getText().toString().trim();
+                if (email.isEmpty())
+                    return;
                 new MaterialAlertDialogBuilder(Login.this)
                         .setTitle("Reset Password?")
                         .setMessage(email)
@@ -173,7 +182,18 @@ public class Login extends AppCompatActivity {
 
     }
 
-    void Init() {
+    private void createRequest() {
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if (googleSignInAccount != null) {
+
+        }
+
+    }
+
+    private void Init() {
         textViewDontHaveAccount.setText(HtmlCompat.fromHtml("<font color=#666666>Didn't have an account</font> <u></font><b><font color=#0173B7>Sign Up</font></u></b></font>", 0));
         mainContainer.setOnTouchListener(new View.OnTouchListener() {
             @Override

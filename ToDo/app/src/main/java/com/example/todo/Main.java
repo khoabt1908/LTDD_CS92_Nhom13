@@ -3,18 +3,19 @@ package com.example.todo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -22,16 +23,46 @@ public class Main extends AppCompatActivity {
     private MaterialToolbar topAppBar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Fragment manageTask = new ManageTaskFragment();
+        loadFragment(manageTask);
         topAppBar = (MaterialToolbar) findViewById(R.id.topAppBar);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         Menu menuNav = navigationView.getMenu();
         MenuItem logoutItem = menuNav.findItem(R.id.logOutDrawer);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.page_1) {
+                    Fragment manageTask = new ManageTaskFragment();
+                    loadFragment(manageTask);
+                    return true;
+                }
+                if (item.getItemId() == R.id.page_2) {
+                    Fragment search = new SearchFragment();
+                    loadFragment(search);
+                    return true;
+                }
+                if (item.getItemId() == R.id.page_3) {
+                    Fragment user = new UserFragment();
+                    loadFragment(user);
+                    return true;
+                }
+
+
+                return false;
+            }
+        });
+
         logoutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -68,6 +99,13 @@ public class Main extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }
