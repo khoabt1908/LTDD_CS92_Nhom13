@@ -2,9 +2,12 @@ package com.example.todo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +15,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Main extends AppCompatActivity {
     private MaterialToolbar topAppBar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
+    private FirebaseAuth fAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +44,11 @@ public class Main extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         Menu menuNav = navigationView.getMenu();
         MenuItem logoutItem = menuNav.findItem(R.id.logOutDrawer);
+        MenuItem changePassItem = menuNav.findItem(R.id.changePass);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        fAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -81,6 +93,26 @@ public class Main extends AppCompatActivity {
                 return false;
             }
         });
+        changePassItem.setOnMenuItemClickListener(menuItem -> {
+            drawerLayout.close();
+            final EditText changePass = new EditText(Main.this);
+            new MaterialAlertDialogBuilder(Main.this)
+                    .setTitle("Bạn muốn đổi mật khẩu tài khoản?")
+                    .setMessage("Vui lòng nhập từ 6 đến 8 kí tự!")
+                    .setView(changePass)
+                    .setNegativeButton("Huỷ", (dialogInterface, i) -> {
+                    })
+                    .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
+                        String newPass = changePass.getText().toString().trim();
+                        FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPass)
+                                .addOnSuccessListener(aVoid ->
+                                Toast.makeText(Main.this, "Đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show())
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(Main.this, "Đổi mật khẩu không thành công!", Toast.LENGTH_SHORT).show());
+                    })
+                    .show();
+            return false;
+        });
 
         topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +125,8 @@ public class Main extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item == logoutItem)
+                    return false;
+                if (item == changePassItem)
                     return false;
                 item.setChecked(true);
                 drawerLayout.close();
