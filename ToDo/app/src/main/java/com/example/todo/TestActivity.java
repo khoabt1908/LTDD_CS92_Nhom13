@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class TestActivity extends AppCompatActivity {
-    private Button changePass, test;
+    private Button changePass;
     private FirebaseAuth fAuth;
     private FirebaseUser user;
     private EditText inputPass;
@@ -25,7 +25,6 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         changePass = (Button) findViewById(R.id.changePass);
-        test = (Button) findViewById(R.id.test);
         inputPass = (EditText) findViewById(R.id.inputPass);
         fAuth = FirebaseAuth.getInstance();
         user = fAuth.getCurrentUser();
@@ -47,14 +46,6 @@ public class TestActivity extends AppCompatActivity {
                             });
                         })
                         .show();
-            }
-        });
-
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Main.class);
-                startActivity(intent);
             }
         });
 
