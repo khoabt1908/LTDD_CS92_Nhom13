@@ -38,15 +38,6 @@ public class FirstLogin extends AppCompatActivity {
             }
         });
 
-        loginButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Main.class);
-                startActivity(intent);
-                return false;
-            }
-        });
-
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

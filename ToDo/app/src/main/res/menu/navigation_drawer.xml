@@ -59,10 +59,6 @@
             android:icon="@drawable/ic_baseline_settings_24"
             android:title="@string/settingDrawer" />
         <item
-            android:id="@+id/changePass"
-            android:icon="@drawable/ic_baseline_create_24"
-            android:title="@string/changePass" />
-        <item
             android:id="@+id/logOutDrawer"
             android:icon="@drawable/ic_baseline_logout_24"
             android:title="@string/logoutDrawer" />

@@ -44,7 +44,7 @@ public class Main extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         Menu menuNav = navigationView.getMenu();
         MenuItem logoutItem = menuNav.findItem(R.id.logOutDrawer);
-        MenuItem changePassItem = menuNav.findItem(R.id.changePass);
+        MenuItem helpItem = menuNav.findItem(R.id.helpDrawer);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -93,26 +93,33 @@ public class Main extends AppCompatActivity {
                 return false;
             }
         });
-        changePassItem.setOnMenuItemClickListener(menuItem -> {
-            drawerLayout.close();
-            final EditText changePass = new EditText(Main.this);
-            new MaterialAlertDialogBuilder(Main.this)
-                    .setTitle("Bạn muốn đổi mật khẩu tài khoản?")
-                    .setMessage("Vui lòng nhập từ 6 đến 8 kí tự!")
-                    .setView(changePass)
-                    .setNegativeButton("Huỷ", (dialogInterface, i) -> {
-                    })
-                    .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
-                        String newPass = changePass.getText().toString().trim();
-                        FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPass)
-                                .addOnSuccessListener(aVoid ->
-                                Toast.makeText(Main.this, "Đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show())
-                                .addOnFailureListener(e ->
-                                        Toast.makeText(Main.this, "Đổi mật khẩu không thành công!", Toast.LENGTH_SHORT).show());
-                    })
-                    .show();
+
+        helpItem.setOnMenuItemClickListener(menuItem -> {
+            Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+            startActivity(intent);
             return false;
         });
+
+//        changePassItem.setOnMenuItemClickListener(menuItem -> {
+//            drawerLayout.close();
+//            final EditText changePass = new EditText(Main.this);
+//            new MaterialAlertDialogBuilder(Main.this)
+//                    .setTitle("Bạn muốn đổi mật khẩu tài khoản?")
+//                    .setMessage("Vui lòng nhập từ 6 đến 8 kí tự!")
+//                    .setView(changePass)
+//                    .setNegativeButton("Huỷ", (dialogInterface, i) -> {
+//                    })
+//                    .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
+//                        String newPass = changePass.getText().toString().trim();
+//                        FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPass)
+//                                .addOnSuccessListener(aVoid ->
+//                                Toast.makeText(Main.this, "Đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show())
+//                                .addOnFailureListener(e ->
+//                                        Toast.makeText(Main.this, "Đổi mật khẩu không thành công!", Toast.LENGTH_SHORT).show());
+//                    })
+//                    .show();
+//            return false;
+//        });
 
         topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,8 +132,6 @@ public class Main extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item == logoutItem)
-                    return false;
-                if (item == changePassItem)
                     return false;
                 item.setChecked(true);
                 drawerLayout.close();
