@@ -6,11 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Main">
-    <FrameLayout
-        android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
@@ -27,24 +23,29 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.appbar.MaterialToolbar
-                    android:layout_width="match_parent"
-                    app:menu="@menu/top_app_bar"
                     android:id="@+id/topAppBar"
-                    android:layout_height="?attr/actionBarSize"
-                    app:title="@string/page_title"
-                    app:navigationIcon="@drawable/ic_outline_format_list_bulleted_24"
                     style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:menu="@menu/top_app_bar"
+                    app:navigationIcon="@drawable/ic_outline_format_list_bulleted_24"
+                    app:title="@string/page_title" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <!-- Use app:layout_behavior="@string/appbar_scrolling_view_behavior" to fit below top app bar -->
+                <FrameLayout
+                    android:paddingBottom="60dp"
+                    android:id="@+id/frame_container"
+                    android:layout_width="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_height="match_parent" />
+
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation"
                 style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_gravity="bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,8 +61,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:menu="@menu/navigation_drawer"
-            app:headerLayout="@layout/header_navigation_drawer"/>
+            app:headerLayout="@layout/header_navigation_drawer"
+            app:menu="@menu/navigation_drawer" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
