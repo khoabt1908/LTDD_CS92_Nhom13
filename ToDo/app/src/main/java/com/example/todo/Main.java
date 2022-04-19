@@ -104,29 +104,6 @@ public class Main extends AppCompatActivity {
             return false;
         });
 
-
-
-//        changePassItem.setOnMenuItemClickListener(menuItem -> {
-//            drawerLayout.close();
-//            final EditText changePass = new EditText(Main.this);
-//            new MaterialAlertDialogBuilder(Main.this)
-//                    .setTitle("Bạn muốn đổi mật khẩu tài khoản?")
-//                    .setMessage("Vui lòng nhập từ 6 đến 8 kí tự!")
-//                    .setView(changePass)
-//                    .setNegativeButton("Huỷ", (dialogInterface, i) -> {
-//                    })
-//                    .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
-//                        String newPass = changePass.getText().toString().trim();
-//                        FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPass)
-//                                .addOnSuccessListener(aVoid ->
-//                                Toast.makeText(Main.this, "Đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show())
-//                                .addOnFailureListener(e ->
-//                                        Toast.makeText(Main.this, "Đổi mật khẩu không thành công!", Toast.LENGTH_SHORT).show());
-//                    })
-//                    .show();
-//            return false;
-//        });
-
         topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.todo.Adapter.ToDoAdapter;
+import com.example.todo.Model.TaskModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +29,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ManageTaskFragment extends Fragment {
 
     private FloatingActionButton addTask;
+    private RecyclerView recyclerView;
+    private ToDoAdapter taskAdapter;
+
+    private List<TaskModel> taskList;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,24 +82,58 @@ public class ManageTaskFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_manage_task, container, false);
 
+        taskList = new ArrayList<>();
+
         addTask = (FloatingActionButton) rootview.findViewById(R.id.floating_action_button);
+        recyclerView = (RecyclerView) rootview.findViewById(R.id.taskList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        taskAdapter = new ToDoAdapter(this);
+        recyclerView.setAdapter(taskAdapter);
+
+        TaskModel task = new TaskModel();
+        task.setTask("Báo mới nè");
+        task.setStatus(0);
+        task.setId(1);
+
+        TaskModel task2 = new TaskModel();
+        task2.setTask("Chỉ đi năn nỉ");
+        task2.setStatus(1);
+        task2.setId(2);
+
+
+
+        taskList.add(task);
+        taskList.add(task);
+        taskList.add(task);
+        taskList.add(task);
+        taskList.add(task);
+        taskList.add(task);
+        taskList.add(task2);
+        taskList.add(task2);
+        taskList.add(task2);
+        taskList.add(task2);
+        taskList.add(task2);
+        taskList.add(task2);
+
+        taskAdapter.setTasks(taskList);
 
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText ten = new EditText(getActivity());
+                ten.setMaxLines(1);
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                        .setTitle("Title")
-                        .setMessage("Message")
+                        .setTitle("Thêm mới công việc")
+                        .setMessage("Nhập tên công việc")
                         .setView(ten)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String editTextInput = ten.getText().toString();
                                 Toast.makeText(getActivity(), editTextInput, Toast.LENGTH_SHORT).show();
                             }
                         })
-                        .setNegativeButton("Cancel", null)
+                        .setNegativeButton("Hủy", null)
                         .create();
                 dialog.show();
             }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,9 +41,12 @@ public class TestActivity extends AppCompatActivity {
                         })
                         .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
                             String newPass = inputPass.getText().toString().trim();
-                            user.updatePassword(newPass).addOnSuccessListener(unused -> {
-                                Intent intent = new Intent(getApplicationContext(), Main.class);
-                                startActivity(intent);
+                            user.updatePassword(newPass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Intent intent = new Intent(getApplicationContext(), Main.class);
+                                    startActivity(intent);
+                                }
                             });
                         })
                         .show();
