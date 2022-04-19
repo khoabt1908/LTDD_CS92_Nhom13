@@ -14,7 +14,7 @@
     <string name="content_description_favorite">List yêu thích của bạn</string>
     <string name="content_description_search">Tìm kiếm</string>
     <string name="content_description_more">Thêm</string>
-    <string name="header_title_Drawer">TASK CỦA BẠN NÈ</string>
+    <string name="header_title_Drawer">Quản lý công việc</string>
     <string name="recentlyListTextDrawer"></string>
     <string name="stickListDrawer">Nhãn</string>
     <string name="deleteListDrawer">Các mục đã xóa</string>
