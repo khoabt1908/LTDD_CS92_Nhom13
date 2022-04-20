@@ -38,6 +38,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         holder.task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                System.out.println(item.getId());
                 if(holder.task.isChecked()){
                     holder.task.setPaintFlags(holder.task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }

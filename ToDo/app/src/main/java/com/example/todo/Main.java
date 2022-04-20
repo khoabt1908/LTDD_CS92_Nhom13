@@ -3,7 +3,6 @@ package com.example.todo;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -34,7 +31,7 @@ public class Main extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
     private FirebaseAuth fAuth;
-
+    private FloatingActionButton addTask;
 
 
     @Override
@@ -52,25 +49,49 @@ public class Main extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        addTask = (FloatingActionButton) findViewById(R.id.floating_action_button);
 
-
-
+        addTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText ten = new EditText(Main.this);
+                ten.setMaxLines(1);
+                AlertDialog dialog = new AlertDialog.Builder(Main.this)
+                        .setTitle("Thêm mới công việc")
+                        .setMessage("Nhập tên công việc")
+                        .setView(ten)
+                        .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String editTextInput = ten.getText().toString();
+                                Toast.makeText(Main.this, editTextInput, Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Hủy", null)
+                        .create();
+                dialog.show();
+            }
+        });
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment search = new SearchFragment();
+                Fragment manageTask = new ManageTaskFragment();
+                Fragment user = new UserFragment();
+
                 if (item.getItemId() == R.id.page_1) {
-                    Fragment manageTask = new ManageTaskFragment();
                     loadFragment(manageTask);
+                    addTask.show();
                     return true;
                 }
                 if (item.getItemId() == R.id.page_2) {
-                    Fragment search = new SearchFragment();
                     loadFragment(search);
+                    addTask.hide();
                     return true;
                 }
                 if (item.getItemId() == R.id.page_3) {
-                    Fragment user = new UserFragment();
                     loadFragment(user);
+                    addTask.hide();
                     return true;
                 }
 
