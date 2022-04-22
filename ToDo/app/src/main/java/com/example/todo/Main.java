@@ -24,6 +24,11 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Main extends AppCompatActivity {
     private MaterialToolbar topAppBar;
@@ -32,7 +37,6 @@ public class Main extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private FirebaseAuth fAuth;
     private FloatingActionButton addTask;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,5 +154,4 @@ public class Main extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }

@@ -30,7 +30,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     public void onBindViewHolder(ViewHolder holder, int position) {
         TaskModel item = todoList.get(position);
-        holder.task.setText(item.getTask());
+        holder.task.setText(item.getTaskName());
         holder.task.setChecked(toBoolean(item.getStatus()));
         if (toBoolean(item.getStatus()))
             holder.task.setPaintFlags(holder.task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -38,7 +38,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         holder.task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                System.out.println(item.getId());
+                System.out.println("check date "+ item.getEndDate());
                 if(holder.task.isChecked()){
                     holder.task.setPaintFlags(holder.task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }

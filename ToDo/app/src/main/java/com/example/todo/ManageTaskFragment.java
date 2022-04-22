@@ -81,22 +81,22 @@ public class ManageTaskFragment extends Fragment {
 
 
         TaskModel task = new TaskModel();
-        task.setTask("task 1");
+        task.setTaskName("task 1");
         task.setStatus(0);
         task.setId(1);
 
         TaskModel task2 = new TaskModel();
-        task2.setTask("task 2");
+        task2.setTaskName("task 2");
         task2.setStatus(1);
         task2.setId(2);
 
         TaskModel task3 = new TaskModel();
-        task3.setTask("task 3");
+        task3.setTaskName("task 3");
         task3.setStatus(1);
         task3.setId(3);
 
         TaskModel task4 = new TaskModel();
-        task4.setTask("task 4");
+        task4.setTaskName("task 4");
         task4.setStatus(1);
         task4.setId(4);
 
