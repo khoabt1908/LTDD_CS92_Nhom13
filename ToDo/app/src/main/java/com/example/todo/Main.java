@@ -16,6 +16,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.todo.Model.JobModel;
+import com.example.todo.Model.TaskModel;
+import com.example.todo.Model.UserModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -27,8 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
 public class Main extends AppCompatActivity {
     private MaterialToolbar topAppBar;
@@ -37,6 +39,8 @@ public class Main extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private FirebaseAuth fAuth;
     private FloatingActionButton addTask;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,41 @@ public class Main extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         addTask = (FloatingActionButton) findViewById(R.id.floating_action_button);
+
+//        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+//
+//
+//        UserModel userModel = new UserModel();
+//        TaskModel taskModel = new TaskModel();
+//        JobModel jobModel = new JobModel();
+//
+//
+//        ArrayList<TaskModel> taskModels = new ArrayList<>();
+//        ArrayList<JobModel> jobModels = new ArrayList<>();
+//
+//        taskModel.setId(1);
+//        taskModel.setStatus(1);
+//        taskModel.setTaskName("Task 1");
+//        taskModel.setDescription("mo ta task 1");
+//
+//        jobModel.setId(1);
+//        jobModel.setName("job1");
+//
+//        taskModels.add(taskModel);
+//        taskModels.add(taskModel);
+//        taskModels.add(taskModel);
+//        taskModels.add(taskModel);
+//        taskModels.add(taskModel);
+//
+//        jobModel.setTaskList(taskModels);
+//
+//        jobModels.add(jobModel);
+//
+//        userModel.setJobList(jobModels);
+//        userModel.setId(user.getUid());
+//
+//        mDatabase.child(user.getUid()).setValue(userModel);
+
 
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,15 +129,16 @@ public class Main extends AppCompatActivity {
                 }
                 if (item.getItemId() == R.id.page_2) {
                     loadFragment(search);
+                    topAppBar.setTitle("Tìm kiếm");
                     addTask.hide();
                     return true;
                 }
                 if (item.getItemId() == R.id.page_3) {
                     loadFragment(user);
+                    topAppBar.setTitle("Quản lý tài khoản");
                     addTask.hide();
                     return true;
                 }
-
 
                 return false;
             }

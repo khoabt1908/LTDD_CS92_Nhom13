@@ -5,12 +5,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.Adapter.ToDoAdapter;
 import com.example.todo.Model.TaskModel;
+import com.example.todo.Model.UserModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +38,7 @@ public class ManageTaskFragment extends Fragment {
     private RecyclerView recyclerView;
     private ToDoAdapter taskAdapter;
     private List<TaskModel> taskList;
+    private DatabaseReference mDatabase;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -71,43 +81,30 @@ public class ManageTaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_manage_task, container, false);
-
-        taskList = new ArrayList<>();
-
         recyclerView = (RecyclerView) rootview.findViewById(R.id.taskList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         taskAdapter = new ToDoAdapter(this);
-        recyclerView.setAdapter(taskAdapter);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        TaskModel task = new TaskModel();
-        task.setTaskName("task 1");
-        task.setStatus(0);
-        task.setId(1);
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        TaskModel task2 = new TaskModel();
-        task2.setTaskName("task 2");
-        task2.setStatus(1);
-        task2.setId(2);
+        mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserModel userModel = snapshot.getValue(UserModel.class);
+                taskList = userModel.getJobList().get(0).getTaskList();
+                recyclerView.setAdapter(taskAdapter);
+                taskAdapter.setTasks(taskList);
+                System.out.println(userModel.getJobList().get(0).getTaskList().get(0).getTaskName());
 
-        TaskModel task3 = new TaskModel();
-        task3.setTaskName("task 3");
-        task3.setStatus(1);
-        task3.setId(3);
+            }
 
-        TaskModel task4 = new TaskModel();
-        task4.setTaskName("task 4");
-        task4.setStatus(1);
-        task4.setId(4);
-
-        taskList.add(task);
-        taskList.add(task2);
-        taskList.add(task3);
-        taskList.add(task4);
-
-
-        taskAdapter.setTasks(taskList);
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println(error.toException());
+            }
+        });
 
         return rootview;
     }

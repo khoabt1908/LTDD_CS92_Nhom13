@@ -2,8 +2,7 @@
   "app-name": "todo",
   "xyz": "....",
   "users": [
-    {
-      "userid": 1,
+   "userid": {
       "jobs": [
         {
           "id": 1,
