@@ -1,6 +1,7 @@
 package com.example.todo;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.todo.Adapter.ToDoAdapter;
 import com.example.todo.Model.TaskModel;
@@ -37,6 +39,7 @@ public class ManageTaskFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ToDoAdapter taskAdapter;
     private List<TaskModel> taskList;
     private DatabaseReference mDatabase;
@@ -73,8 +76,6 @@ public class ManageTaskFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -83,14 +84,25 @@ public class ManageTaskFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_manage_task, container, false);
         recyclerView = (RecyclerView) rootview.findViewById(R.id.taskList);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.refresh);
         taskAdapter = new ToDoAdapter(this);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         Bundle args = getArguments();
         int index = args.getInt("index", 0);
         loadData(index);
+        swipeRefreshLayout.setColorScheme(R.color.blue, R.color.purple, R.color.green, R.color.orange);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1500);
+            }
+        });
 
         return rootview;
     }
@@ -101,7 +113,7 @@ public class ManageTaskFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel userModel = snapshot.getValue(UserModel.class);
                 ///check
-                if(userModel.getJobList()!=null && userModel.getJobList().size()>0)
+                if(userModel!=null && userModel.getJobList()!=null && userModel.getJobList().size()>0)
                 {
                     taskList = userModel.getJobList().get(i).getTaskList();
                     List<TaskModel> resultTaskList = new ArrayList<>();

@@ -12,4 +12,8 @@
     <color name="main_light_color">#71d9ff</color>
     <color name="main_dark_color">#0079ad</color>
     <color name="error">#B71C1C</color>
+    <color name="blue">#0099CC</color>
+    <color name="purple">#9933CC</color>
+    <color name="green">#669900</color>
+    <color name="orange">#FF8800</color>
 </resources>
