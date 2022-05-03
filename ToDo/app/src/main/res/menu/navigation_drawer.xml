@@ -4,11 +4,6 @@
     <group
         android:id="@+id/group1"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/recentlyList"
-            android:checked="true"
-            android:icon="@drawable/ic_outline_format_list_bulleted_24"
-            android:title="@string/recentlyListTextDrawer" />
     </group>
     <group
         android:id="@+id/group2"
@@ -16,51 +11,37 @@
         <item
             android:id="@+id/createListDrawer"
             android:icon="@drawable/ic_baseline_control_point_24"
+            android:orderInCategory="1"
             android:title="@string/createListDrawer" />
-        <item
-            android:id="@+id/createListFilterDrawer"
-            android:icon="@drawable/ic_baseline_filter_list_24"
-            android:title="@string/createListFilterDrawer" />
         <item
             android:id="@+id/editListDrawer"
             android:icon="@drawable/ic_baseline_create_24"
+            android:orderInCategory="1"
             android:title="@string/editListDrawer" />
+        <item
+            android:id="@+id/deleteListDrawer"
+            android:icon="@drawable/ic_baseline_delete_outline_24"
+            android:orderInCategory="1"
+            android:title="@string/deleteListDrawer" />
     </group>
-
     <group
         android:id="@+id/group3"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/stickListDrawer"
-            android:icon="@drawable/ic_outline_sticky_note_2_24"
-            android:title="@string/stickListDrawer" />
-        <item
-            android:id="@+id/deleteListDrawer"
-            android:icon="@drawable/ic_baseline_delete_outline_24"
-            android:title="@string/deleteListDrawer" />
-    </group>
-    <group
-        android:id="@+id/group4"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/accountVIPDrawer"
-            android:icon="@drawable/ic_baseline_stars_24"
-            android:title="@string/accountVIPDrawer" />
-        <item
-            android:id="@+id/donationDrawer"
-            android:icon="@drawable/ic_baseline_favorite_border_24"
-            android:title="@string/donationDrawer" />
-        <item
             android:id="@+id/helpDrawer"
+
             android:icon="@drawable/ic_sharp_help_outline_24"
+            android:orderInCategory="2"
             android:title="@string/helpDrawer" />
         <item
             android:id="@+id/settingDrawer"
             android:icon="@drawable/ic_baseline_settings_24"
+            android:orderInCategory="2"
             android:title="@string/settingDrawer" />
         <item
             android:id="@+id/logOutDrawer"
             android:icon="@drawable/ic_baseline_logout_24"
+            android:orderInCategory="2"
             android:title="@string/logoutDrawer" />
     </group>
 

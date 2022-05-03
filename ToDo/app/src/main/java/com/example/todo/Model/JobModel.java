@@ -9,14 +9,6 @@ public class JobModel {
     private String startDate;
     private ArrayList<TaskModel> taskList;
 
-    public JobModel() {
-        this.id = id;
-        this.name = name;
-        this.color = color;
-        this.startDate = startDate;
-        this.taskList = taskList;
-    }
-
     public int getId() {
         return id;
     }
@@ -54,6 +46,14 @@ public class JobModel {
     }
 
     public void setTaskList(ArrayList<TaskModel> taskList) {
+        this.taskList = taskList;
+    }
+
+    public JobModel() {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+        this.startDate = startDate;
         this.taskList = taskList;
     }
 }

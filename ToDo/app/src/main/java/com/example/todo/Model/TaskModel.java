@@ -1,5 +1,7 @@
 package com.example.todo.Model;
 
+import java.util.UUID;
+
 public class TaskModel {
     private int id;
     private int status;
@@ -7,6 +9,17 @@ public class TaskModel {
     private String description;
     private String startDate;
     private String endDate;
+    private int isDelete;
+
+    public TaskModel() {
+        this.id = id;
+        this.status = status;
+        this.taskName = taskName;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isDelete = isDelete;
+    }
 
     public int getId() {
         return id;
@@ -56,12 +69,11 @@ public class TaskModel {
         this.endDate = endDate;
     }
 
-    public TaskModel() {
-        this.id = id;
-        this.status = status;
-        this.taskName = taskName;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
 }

@@ -15,7 +15,6 @@
     <string name="content_description_search">Tìm kiếm</string>
     <string name="content_description_more">Thêm</string>
     <string name="header_title_Drawer">Quản lý công việc</string>
-    <string name="recentlyListTextDrawer"></string>
     <string name="stickListDrawer">Nhãn</string>
     <string name="deleteListDrawer">Các mục đã xóa</string>
     <string name="accountVIPDrawer">Nâng cấp lên Bản cao cấp</string>

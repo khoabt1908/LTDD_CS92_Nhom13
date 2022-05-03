@@ -35,6 +35,7 @@ public class ManageTaskFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private RecyclerView recyclerView;
     private ToDoAdapter taskAdapter;
     private List<TaskModel> taskList;
@@ -87,16 +88,32 @@ public class ManageTaskFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Bundle args = getArguments();
+        int index = args.getInt("index", 0);
+        loadData(index);
 
+        return rootview;
+    }
+
+    public void loadData(int i) {
         mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel userModel = snapshot.getValue(UserModel.class);
-                taskList = userModel.getJobList().get(0).getTaskList();
-                recyclerView.setAdapter(taskAdapter);
-                taskAdapter.setTasks(taskList);
-                System.out.println(userModel.getJobList().get(0).getTaskList().get(0).getTaskName());
+                ///check
+                if(userModel.getJobList()!=null && userModel.getJobList().size()>0)
+                {
+                    taskList = userModel.getJobList().get(i).getTaskList();
+                    List<TaskModel> resultTaskList = new ArrayList<>();
+                    for (TaskModel taskModel : taskList) {
+                        if (taskModel.getIsDelete() != 1)
+                            resultTaskList.add(taskModel);
+                    }
+                    recyclerView.setAdapter(taskAdapter);
+                    taskAdapter.setTasks(resultTaskList);
+                    System.out.println(userModel.getJobList().get(0).getTaskList().get(0).getTaskName());
+                }
+
 
             }
 
@@ -105,7 +122,5 @@ public class ManageTaskFragment extends Fragment {
                 System.out.println(error.toException());
             }
         });
-
-        return rootview;
     }
 }
