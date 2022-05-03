@@ -45,5 +45,5 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
     implementation 'com.google.firebase:firebase-database:20.0.4'
-
+    implementation 'io.github.thang-uit:toastperfectlibrary:1.0.1'
 }

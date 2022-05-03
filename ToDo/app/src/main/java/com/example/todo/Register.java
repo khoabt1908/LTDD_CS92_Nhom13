@@ -32,6 +32,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.thanguit.toastperfect.ToastPerfect;
+
 public class Register extends AppCompatActivity {
     private TextView textViewPolicy, textViewHaveAccount;
     private LinearLayout mainContainer;
@@ -115,12 +117,12 @@ public class Register extends AppCompatActivity {
                             currentUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Toast.makeText(Register.this, "Da gui email xac nhan", Toast.LENGTH_SHORT) .show();
+                                    ToastPerfect.makeText(Register.this, ToastPerfect.SUCCESS, "Đã gửi mail xác nhận", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Register.this, "Error , Email not sent", Toast.LENGTH_LONG).show();
+                                    ToastPerfect.makeText(Register.this, ToastPerfect.SUCCESS, "Không thể gửi mail", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                 }
                             });
                             userId = fAuth.getCurrentUser().getUid();

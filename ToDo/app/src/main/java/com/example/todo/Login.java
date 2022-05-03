@@ -30,6 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import vn.thanguit.toastperfect.ToastPerfect;
+
 public class Login extends AppCompatActivity {
     private TextView textViewDontHaveAccount, forgotPass;
     private LinearLayout mainContainer;
@@ -156,7 +158,7 @@ public class Login extends AppCompatActivity {
                             fAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Toast.makeText(Login.this, "Reset link sent to your email", Toast.LENGTH_SHORT).show();
+                                    ToastPerfect.makeText(Login.this, ToastPerfect.SUCCESS, "Reset link sent to your email", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                     loading.setVisibility(View.INVISIBLE);
                                     signInButton.setVisibility(View.VISIBLE);
                                     forgotPass.setVisibility(View.VISIBLE);
@@ -164,7 +166,7 @@ public class Login extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Login.this, "Error! Reset link is not sent", Toast.LENGTH_SHORT).show();
+                                    ToastPerfect.makeText(Login.this, ToastPerfect.ERROR, "Error! Reset link is not sent", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                     loading.setVisibility(View.INVISIBLE);
                                     signInButton.setVisibility(View.VISIBLE);
                                     forgotPass.setVisibility(View.VISIBLE);

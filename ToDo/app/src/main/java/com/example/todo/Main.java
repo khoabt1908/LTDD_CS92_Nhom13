@@ -32,6 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import vn.thanguit.toastperfect.ToastPerfect;
+
 public class Main extends AppCompatActivity {
     private MaterialToolbar topAppBar;
     private NavigationView navigationView;
@@ -107,7 +109,7 @@ public class Main extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String editTextInput = ten.getText().toString();
-                                Toast.makeText(Main.this, editTextInput, Toast.LENGTH_SHORT).show();
+                                ToastPerfect.makeText(Main.this, ToastPerfect.SUCCESS, editTextInput, ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("Hủy", null)
