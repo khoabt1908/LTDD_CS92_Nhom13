@@ -90,7 +90,9 @@ public class ManageTaskFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         Bundle args = getArguments();
         int index = args.getInt("index", 0);
-        loadData(index);
+        int isDelete = args.getInt("isDelete", 0);
+
+        loadData(index, isDelete);
         swipeRefreshLayout.setColorScheme(R.color.blue, R.color.purple, R.color.green, R.color.orange);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -107,26 +109,41 @@ public class ManageTaskFragment extends Fragment {
         return rootview;
     }
 
-    public void loadData(int i) {
+    public void scrollToBot(){
+        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount()-1);
+    }
+
+    public void loadData(int i, int isDelete) {
         mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel userModel = snapshot.getValue(UserModel.class);
                 ///check
-                if(userModel!=null && userModel.getJobList()!=null && userModel.getJobList().size()>0)
-                {
-                    taskList = userModel.getJobList().get(i).getTaskList();
-                    List<TaskModel> resultTaskList = new ArrayList<>();
-                    for (TaskModel taskModel : taskList) {
-                        if (taskModel.getIsDelete() != 1)
-                            resultTaskList.add(taskModel);
+                if (userModel != null && userModel.getJobList() != null && userModel.getJobList().size() > 0) {
+                    if (isDelete == 0) {
+                        taskList = userModel.getJobList().get(i).getTaskList();
+                        List<TaskModel> resultTaskList = new ArrayList<>();
+                        for (TaskModel taskModel : taskList) {
+                            if (taskModel.getIsDelete() == 0)
+                                resultTaskList.add(taskModel);
+                        }
+                        recyclerView.setAdapter(taskAdapter);
+                        taskAdapter.setTasks(resultTaskList);
                     }
-                    recyclerView.setAdapter(taskAdapter);
-                    taskAdapter.setTasks(resultTaskList);
-                    System.out.println(userModel.getJobList().get(0).getTaskList().get(0).getTaskName());
+                    if (isDelete == 1) {
+                        List<TaskModel> resultTaskList = new ArrayList<>();
+                        for(int j = 0; j < userModel.getJobList().size();j++)
+                        {
+                            taskList = userModel.getJobList().get(j).getTaskList();
+                            for (TaskModel taskModel : taskList) {
+                                if (taskModel.getIsDelete() == 1)
+                                    resultTaskList.add(taskModel);
+                            }
+                        }
+                        recyclerView.setAdapter(taskAdapter);
+                        taskAdapter.setTasks(resultTaskList);
+                    }
                 }
-
-
             }
 
             @Override

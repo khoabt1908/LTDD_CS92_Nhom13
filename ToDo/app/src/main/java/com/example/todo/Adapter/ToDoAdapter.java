@@ -32,17 +32,20 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         TaskModel item = todoList.get(position);
         holder.task.setText(item.getTaskName());
         holder.task.setChecked(toBoolean(item.getStatus()));
-        if (toBoolean(item.getStatus()))
+
+        if (item.getStatus() == 1)
             holder.task.setPaintFlags(holder.task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        else
+            holder.task.setPaintFlags(holder.task.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+
 
         holder.task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("check date "+ item.getEndDate());
-                if(holder.task.isChecked()){
+                System.out.println("check date " + item.getEndDate());
+                if (holder.task.isChecked()) {
                     holder.task.setPaintFlags(holder.task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                }
-                else {
+                } else {
                     holder.task.setPaintFlags(holder.task.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 }
 
