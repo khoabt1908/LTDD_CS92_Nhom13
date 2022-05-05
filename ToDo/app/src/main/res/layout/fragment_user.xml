@@ -4,133 +4,187 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".UserFragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:alpha="0.8"
-                android:background="@drawable/background"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0">
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="48dp"
+                android:text="Như Ngọc nè"
+                android:textColor="@color/dark_blue"
+                android:textSize="32dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/avt"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:src="@drawable/avatar"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/profile_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:text="@nguyenhoangnhungocdethuong"
+                android:textSize="18dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:text="Như Ngọc"
-                    android:textColor="@color/white"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/roboto"
-                    android:text="nguyenhoangnhungocdethuongday"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        </LinearLayout>
     </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.7">
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:hint="User Name"
+            android:textColorHint="@color/main_color"
+            app:startIconDrawable="@drawable/vector_acc">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_profile_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="nguyenhoangnhungoc" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_contact"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:hint="Phone Number"
+            android:textColorHint="@color/main_color"
+            app:startIconDrawable="@drawable/vector_contact">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_profile_contact"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="0123456789" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:hint="Email"
+            android:textColorHint="@color/main_color"
+            app:startIconDrawable="@drawable/vector_mail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:text="nhungocdethuongday@gmail.com"
+                android:textColor="#4BB543" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:hint="Password"
+            android:textColorHint="@color/main_color"
+            app:startIconDrawable="@drawable/vector_pass">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_profile_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:inputType="textPassword"
+                android:text="nhungocne"
+                android:textColor="#4BB543" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/changePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="18dp"
+            android:text="🖊 Change Password"
+            android:textAlignment="textEnd"
+            android:textColor="#0173B7"
+            android:textSize="15dp"
+            android:textStyle="bold|italic" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/conner_radius">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/editProfile"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:background="@drawable/login_button"
+                android:text="Edit Profile"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:background="@drawable/logout_button"
+                android:text="Log Out"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>
-
-
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:gravity="center">-->
-    <!--        <ImageView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="300dp"-->
-    <!--            android:src="@drawable/background"-->
-    <!--            tools:ignore="MissingConstraints"-->
-    <!--            android:background="@drawable/round_outline"/>-->
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/UserPic"-->
-    <!--            android:layout_width="100dp"-->
-    <!--            android:layout_height="100dp"-->
-    <!--            android:src="@drawable/img" />-->
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="350dp"-->
-    <!--        android:layout_height="450dp"-->
-    <!--        android:background="@drawable/white_background"/>-->
-
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:orientation="horizontal">-->
-
-    <!--        <ImageView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="300dp"-->
-    <!--            android:alpha="0.8"-->
-    <!--            android:background="@drawable/border"-->
-    <!--            android:src="@drawable/background" />-->
-
-    <!--        <ImageView-->
-    <!--            android:layout_width="100dp"-->
-    <!--            android:layout_height="100dp"-->
-    <!--            android:src="@drawable/avatar"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--            app:layout_constraintRight_toRightOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-    <!--    </LinearLayout>-->
