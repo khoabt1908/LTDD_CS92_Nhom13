@@ -74,7 +74,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/profile_name"
+            android:id="@+id/profile_user_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,6 @@
             app:startIconDrawable="@drawable/vector_acc">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_profile_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="nguyenhoangnhungoc" />
@@ -101,9 +100,9 @@
             app:startIconDrawable="@drawable/vector_contact">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_profile_contact"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="phone"
                 android:text="0123456789" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +117,6 @@
             app:startIconDrawable="@drawable/vector_mail">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_profile_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:enabled="false"
@@ -137,7 +135,6 @@
             app:startIconDrawable="@drawable/vector_pass">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_profile_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:enabled="false"

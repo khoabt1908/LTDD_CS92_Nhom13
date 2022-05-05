@@ -1,5 +1,6 @@
 package com.example.todo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +23,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class UserFragment extends Fragment {
+    private TextView fullName, changePass, userName;
+    private TextInputLayout txtUserName, txtContact, txtEmail;
+    private Button btnEdit, btnLogout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,9 +71,33 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View rootview = inflater.inflate(R.layout.fragment_user, container, false);
+        fullName = (TextView) rootview.findViewById(R.id.profile_name);
+        changePass = (TextView) rootview.findViewById(R.id.changePassword);
+        userName = (TextView) rootview.findViewById(R.id.profile_username);
+        txtUserName = (TextInputLayout) rootview.findViewById(R.id.profile_user_name);
+        txtContact = (TextInputLayout) rootview.findViewById(R.id.profile_contact);
+        txtEmail = (TextInputLayout) rootview.findViewById(R.id.profile_email);
+        btnEdit = (Button) rootview.findViewById(R.id.editProfile);
+        btnLogout = (Button) rootview.findViewById(R.id.logoutButton);
 
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialAlertDialogBuilder(getContext())
+                        .setTitle("Xác nhận")
+                        .setMessage("Bạn có chắc chắn đăng xuất ?")
+                        .setNegativeButton("Huỷ", (dialogInterface, i) -> {
+                        })
+                        .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
+                            FirebaseAuth.getInstance().signOut();
+                            Intent intent = new Intent(getContext(),  Login.class);
+                            startActivity(intent);
+                        })
+                        .show();
+            }
+        });
 
-
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        return rootview;
     }
 }
