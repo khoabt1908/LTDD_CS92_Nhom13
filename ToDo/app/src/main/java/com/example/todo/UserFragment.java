@@ -1,21 +1,27 @@
 package com.example.todo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import vn.thanguit.toastperfect.ToastPerfect;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +32,8 @@ public class UserFragment extends Fragment {
     private TextView fullName, changePass, userName;
     private TextInputLayout txtUserName, txtContact, txtEmail;
     private Button btnEdit, btnLogout;
+    private FirebaseAuth fAuth;
+    private FirebaseUser user;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,6 +89,9 @@ public class UserFragment extends Fragment {
         btnEdit = (Button) rootview.findViewById(R.id.editProfile);
         btnLogout = (Button) rootview.findViewById(R.id.logoutButton);
 
+        fAuth = FirebaseAuth.getInstance();
+        user = fAuth.getCurrentUser();
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,8 +102,32 @@ public class UserFragment extends Fragment {
                         })
                         .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
                             FirebaseAuth.getInstance().signOut();
-                            Intent intent = new Intent(getContext(),  Login.class);
+                            Intent intent = new Intent(getContext(), Login.class);
                             startActivity(intent);
+                        })
+                        .show();
+            }
+        });
+
+        changePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText inputPass = new EditText(getContext());
+                new MaterialAlertDialogBuilder(getContext())
+                        .setTitle("Nhập mật khẩu mới")
+                        .setMessage("Bạn có chắc chắn muốn đổi mật khẩu?")
+                        .setView(inputPass)
+                        .setNegativeButton("Huỷ", (dialogInterface, i) -> {
+                        })
+                        .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
+                            String newPass = inputPass.getText().toString().trim();
+                            user.updatePassword(newPass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Intent intent = new Intent(getContext(), Main.class);
+                                    startActivity(intent);
+                                }
+                            });
                         })
                         .show();
             }
