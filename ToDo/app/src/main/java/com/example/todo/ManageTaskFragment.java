@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -88,6 +89,10 @@ public class ManageTaskFragment extends Fragment {
         taskAdapter = new ToDoAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         Bundle args = getArguments();
         int index = args.getInt("index", 0);
         int isDelete = args.getInt("isDelete", 0);

@@ -1,10 +1,12 @@
 package com.example.todo.Adapter;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +19,11 @@ import java.util.List;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private List<TaskModel> todoList;
     private ManageTaskFragment activity;
+    private Context context;
+
+    public Context getContext() {
+        return context;
+    }
 
     public ToDoAdapter(ManageTaskFragment activity) {
         this.todoList = todoList;
@@ -25,6 +32,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.task_layout, parent, false);
+        this.context = parent.getContext();
         return new ViewHolder(itemView);
     }
 
@@ -64,6 +72,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     private Boolean toBoolean(int n) {
         return n != 0;
+    }
+
+    private void editItem(int pos) {
+        Toast.makeText(activity.getContext(), "Edit", Toast.LENGTH_SHORT).show();
+    }
+
+    private void deleteItem(int pos) {
+        Toast.makeText(activity.getContext(), "Edit", Toast.LENGTH_SHORT).show();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

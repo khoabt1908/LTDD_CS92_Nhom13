@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.example.todo.Model.JobModel;
 import com.example.todo.Model.TaskModel;
@@ -69,6 +70,7 @@ public class Main extends AppCompatActivity {
         addTask = (FloatingActionButton) findViewById(R.id.floating_action_button);
 //
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
+
 
 //
 //        UserModel userModel = new UserModel();
