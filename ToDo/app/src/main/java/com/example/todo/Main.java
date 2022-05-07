@@ -50,7 +50,6 @@ public class Main extends AppCompatActivity {
     private FloatingActionButton addTask;
     private DatabaseReference mDatabase;
     private int currentJob = 0;
-    private int countJob = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +69,8 @@ public class Main extends AppCompatActivity {
         addTask = (FloatingActionButton) findViewById(R.id.floating_action_button);
 //
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
-
-
+//
+//
 //
 //        UserModel userModel = new UserModel();
 //        TaskModel taskModel = new TaskModel();
@@ -126,13 +125,12 @@ public class Main extends AppCompatActivity {
 //
 //
 //        jobModels.add(jobModel);
-//        jobModels.add(jobModel2);
 //
 //        userModel.setJobList(jobModels);
 //        userModel.setId(user.getUid());
 //
 //        mDatabase.child(user.getUid()).setValue(userModel);
-
+//
 
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override

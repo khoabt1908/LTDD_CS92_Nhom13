@@ -30,11 +30,14 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getBindingAdapterPosition();
-        if (direction == ItemTouchHelper.LEFT)
-            Toast.makeText(toDoAdapter.getContext(), "Delete", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(toDoAdapter.getContext(), "Edit", Toast.LENGTH_SHORT).show();
-
+        if (direction == ItemTouchHelper.LEFT){
+            //delete
+            toDoAdapter.deleteItem(position);
+        }
+        else{
+            //edit
+            toDoAdapter.editItem(position);
+        }
 
     }
 

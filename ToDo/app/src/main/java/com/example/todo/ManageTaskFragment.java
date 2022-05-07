@@ -44,6 +44,12 @@ public class ManageTaskFragment extends Fragment {
     private ToDoAdapter taskAdapter;
     private List<TaskModel> taskList;
     private DatabaseReference mDatabase;
+    private int currentJob = 0;
+
+    public int getCurrentJob() {
+        return currentJob;
+    }
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -95,6 +101,7 @@ public class ManageTaskFragment extends Fragment {
 
         Bundle args = getArguments();
         int index = args.getInt("index", 0);
+        this.currentJob = index;
         int isDelete = args.getInt("isDelete", 0);
 
         loadData(index, isDelete);
@@ -128,7 +135,14 @@ public class ManageTaskFragment extends Fragment {
                     if (isDelete == 0) {
                         taskList = userModel.getJobList().get(i).getTaskList();
                         List<TaskModel> resultTaskList = new ArrayList<>();
-                        for (TaskModel taskModel : taskList) {
+//                        for (TaskModel taskModel : taskList) {
+//                            if (taskModel.getIsDelete() == 0)
+//                                resultTaskList.add(taskModel);
+//                        }
+
+                        for(int i = 0 ; i<taskList.size();i++){
+                            TaskModel taskModel = taskList.get(i);
+                            taskModel.setId(i);
                             if (taskModel.getIsDelete() == 0)
                                 resultTaskList.add(taskModel);
                         }
