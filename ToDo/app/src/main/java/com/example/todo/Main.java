@@ -55,12 +55,11 @@ public class Main extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         Menu menuNav = navigationView.getMenu();
         MenuItem logoutItem = menuNav.findItem(R.id.logOutDrawer);
-        MenuItem helpItem = menuNav.findItem(R.id.helpDrawer);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         addTask = (FloatingActionButton) findViewById(R.id.floating_action_button);
-
+//
 //        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 //
 //
@@ -163,12 +162,6 @@ public class Main extends AppCompatActivity {
                         .show();
                 return false;
             }
-        });
-
-        helpItem.setOnMenuItemClickListener(menuItem -> {
-            Intent intent = new Intent(getApplicationContext(), TestActivity.class);
-            startActivity(intent);
-            return false;
         });
 
         topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
