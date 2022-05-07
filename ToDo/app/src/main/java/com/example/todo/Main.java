@@ -59,7 +59,7 @@ public class Main extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         addTask = (FloatingActionButton) findViewById(R.id.floating_action_button);
-
+//
 //        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 //
 //

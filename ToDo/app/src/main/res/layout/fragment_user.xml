@@ -34,10 +34,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="48dp"
-                android:text="Như Ngọc nè"
+                android:text="ToDo User"
                 android:textColor="@color/dark_blue"
                 android:textSize="32dp"
                 android:textStyle="bold"
+                android:maxLines="1"
+                android:maxLength="30"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,9 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:maxLength="10"
                 android:maxLines="1"
-                android:text="@nguyenhoangnhungocdethuong"
+                android:text=""
                 android:textSize="18dp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,14 +80,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
-            android:hint="User Name"
+            android:hint="Full Name"
             android:textColorHint="@color/main_color"
             app:startIconDrawable="@drawable/vector_acc">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:maxLength="30"
                 android:layout_height="match_parent"
-                android:text="nguyenhoangnhungoc" />
+                android:text="" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -103,7 +105,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="phone"
-                android:text="0123456789" />
+                android:maxLength="11"
+                android:text="" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

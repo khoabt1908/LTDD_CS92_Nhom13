@@ -1,25 +1,31 @@
 package com.example.todo;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import vn.thanguit.toastperfect.ToastPerfect;
 
@@ -34,6 +40,9 @@ public class UserFragment extends Fragment {
     private Button btnEdit, btnLogout;
     private FirebaseAuth fAuth;
     private FirebaseUser user;
+    private FirebaseFirestore fStore;
+    private ImageView avatar;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,6 +97,8 @@ public class UserFragment extends Fragment {
         txtEmail = (TextInputLayout) rootview.findViewById(R.id.profile_email);
         btnEdit = (Button) rootview.findViewById(R.id.editProfile);
         btnLogout = (Button) rootview.findViewById(R.id.logoutButton);
+        avatar = (ImageView) rootview.findViewById(R.id.profile_image);
+        fStore = FirebaseFirestore.getInstance();
 
         fAuth = FirebaseAuth.getInstance();
         user = fAuth.getCurrentUser();
@@ -124,15 +135,72 @@ public class UserFragment extends Fragment {
                             user.updatePassword(newPass).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
+                                    ToastPerfect.makeText(getContext(), ToastPerfect.SUCCESS,
+                                            "Thay đổi mật khẩu thành công "
+                                            , ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getContext(), Main.class);
                                     startActivity(intent);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    ToastPerfect.makeText(getContext(), ToastPerfect.ERROR,
+                                            "Có lỗi, thay đổi mật khẩu không thành công "
+                                            , ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
                                 }
                             });
                         })
                         .show();
             }
         });
-
+        loadData();
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateData();
+            }
+        });
         return rootview;
+    }
+
+    private void loadData() {
+        userName.setText(user.getEmail());
+        txtEmail.getEditText().setText(user.getEmail());
+        fStore.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                fullName.setText(documentSnapshot.getString("fName"));
+                txtUserName.getEditText().setText(documentSnapshot.getString("fName"));
+                txtContact.getEditText().setText(documentSnapshot.getString("phone"));
+            }
+        });
+    }
+
+    private void updateData() {
+        String userId = user.getUid();
+        String email = user.getEmail();
+        DocumentReference documentReference = fStore.collection("users").document(userId);
+        String name = txtUserName.getEditText().getText().toString().trim();
+        String sdt = txtContact.getEditText().getText().toString().trim();
+        if (sdt.length() < 10) {
+            ToastPerfect.makeText(getContext(), ToastPerfect.ERROR,
+                    "Sđt không đúng "
+                    , ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String, Object> user = new HashMap<>();
+        user.put("email", email);
+        user.put("fName", name);
+        user.put("phone", sdt);
+        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                ToastPerfect.makeText(getContext(), ToastPerfect.SUCCESS,
+                        "Cập nhật thông tin thành công "
+                        , ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                Log.d("TAG", "On Success user update" + userId);
+                loadData();
+            }
+        });
     }
 }
