@@ -3,7 +3,7 @@ package com.example.todo.Model;
 import java.util.UUID;
 
 public class TaskModel {
-    private int id;
+    private String id;
     private int status;
     private String taskName;
     private String description;
@@ -21,11 +21,11 @@ public class TaskModel {
         this.isDelete = isDelete;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

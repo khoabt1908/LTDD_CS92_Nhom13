@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.example.todo.Model.JobModel;
 import com.example.todo.Model.TaskModel;
@@ -72,30 +71,18 @@ public class Main extends AppCompatActivity {
 //
 //
 //
-//        UserModel userModel = new UserModel();
-//        TaskModel taskModel = new TaskModel();
 //        JobModel jobModel = new JobModel();
+//        UserModel userModel = new UserModel();
 //
 //        JobModel jobModel2 = new JobModel();
-//        TaskModel taskModel2 = new TaskModel();
 //
 //        ArrayList<TaskModel> taskModels = new ArrayList<>();
 //        ArrayList<TaskModel> taskModels2 = new ArrayList<>();
 //
 //        ArrayList<JobModel> jobModels = new ArrayList<>();
 //
-//        UUID uuid = UUID.randomUUID();
-//        taskModel.setId(1);
-//        taskModel.setStatus(1);
-//        taskModel.setTaskName("Task show");
-//        taskModel.setDescription("mo ta task 1");
 //
 //
-//        taskModel2.setId(1);
-//        taskModel2.setStatus(0);
-//        taskModel2.setTaskName("task detete");
-//        taskModel2.setDescription("mo ta task detete");
-//        taskModel2.setIsDelete(0);
 //
 //
 //        jobModel.setId(1);
@@ -104,20 +91,30 @@ public class Main extends AppCompatActivity {
 //        jobModel2.setId(2);
 //        jobModel2.setName("job2 ");
 //
+//         UUID uuid = UUID.randomUUID();
 //
-//        taskModels.add(taskModel);
-//        taskModels.add(taskModel);
-//        taskModels.add(taskModel);
-//        taskModels.add(taskModel);
-//        taskModels.add(taskModel);
-//        taskModels.add(taskModel2);
+//        for (int i = 0; i < 10; i++) {
+//            TaskModel taskModel = new TaskModel();
+//            taskModel.setStatus(1);
+//            taskModel.setTaskName("Task show");
+//            taskModel.setDescription("mo ta task 1");
+//             uuid = UUID.randomUUID();
+//            taskModel.setId(uuid.toString());
+//            taskModels.add(taskModel);
+//        }
+//
+//        for (int i = 0; i < 3; i++) {
+//            TaskModel taskModel2 = new TaskModel();
+//            taskModel2.setStatus(0);
+//            taskModel2.setTaskName("task detete");
+//            taskModel2.setDescription("mo ta task detete");
+//            taskModel2.setIsDelete(0);
+//             uuid = UUID.randomUUID();
+//            taskModel2.setId(uuid.toString());
+//            taskModels.add(taskModel2);
+//        }
 //
 //
-//        taskModels2.add(taskModel2);
-//        taskModels2.add(taskModel2);
-//        taskModels2.add(taskModel);
-//        taskModels2.add(taskModel);
-//        taskModels2.add(taskModel);
 //        jobModel.setTaskList(taskModels);
 //
 //
@@ -125,12 +122,13 @@ public class Main extends AppCompatActivity {
 //
 //
 //        jobModels.add(jobModel);
+//        jobModels.add(jobModel);
 //
 //        userModel.setJobList(jobModels);
 //        userModel.setId(user.getUid());
 //
 //        mDatabase.child(user.getUid()).setValue(userModel);
-//
+
 
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +151,7 @@ public class Main extends AppCompatActivity {
                                     String strDate;
                                     strDate = formatter.format(date);
 
-                                    taskModel.setId(2);
+                                    taskModel.setId(uuid.toString());
                                     taskModel.setStatus(0);
                                     taskModel.setTaskName(editTextInput);
                                     taskModel.setDescription("");
@@ -223,7 +221,7 @@ public class Main extends AppCompatActivity {
             }
         });
 
-      
+
         deleteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -256,7 +254,7 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel userModel = snapshot.getValue(UserModel.class);
@@ -272,6 +270,24 @@ public class Main extends AppCompatActivity {
                 System.out.println(error.toException());
             }
         });
+
+//        mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                UserModel userModel = snapshot.getValue(UserModel.class);
+//                if (userModel == null) {
+//                    UserModel userModel1 = new UserModel();
+//                    userModel1.setId(user.getUid());
+//                    mDatabase.child(user.getUid()).setValue(userModel1);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                System.out.println(error.toException());
+//            }
+//        });
+
 
 
 //        mDatabase.child(user.getUid() + "/jobList").addValueEventListener(new ValueEventListener() {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.todo.Adapter.ToDoAdapter;
+import com.example.todo.Model.JobModel;
 import com.example.todo.Model.TaskModel;
 import com.example.todo.Model.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,15 +48,19 @@ public class ManageTaskFragment extends Fragment {
     private List<TaskModel> taskList;
     private DatabaseReference mDatabase;
     private int currentJob = 0;
+    private int isDelete = 0;
 
-    public int getCurrentJob() {
-        return currentJob;
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     public ManageTaskFragment() {
         // Required empty public constructor
     }
@@ -74,6 +81,10 @@ public class ManageTaskFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public int getCurrentJob() {
+        return currentJob;
     }
 
     @Override
@@ -103,6 +114,7 @@ public class ManageTaskFragment extends Fragment {
         int index = args.getInt("index", 0);
         this.currentJob = index;
         int isDelete = args.getInt("isDelete", 0);
+        this.isDelete = isDelete;
 
         loadData(index, isDelete);
         swipeRefreshLayout.setColorScheme(R.color.blue, R.color.purple, R.color.green, R.color.orange);
@@ -121,28 +133,22 @@ public class ManageTaskFragment extends Fragment {
         return rootview;
     }
 
-    public void scrollToBot(){
-        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount()-1);
+    public void scrollToBot() {
+        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
     }
 
     public void loadData(int i, int isDelete) {
-        mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println(snapshot.getValue());
                 UserModel userModel = snapshot.getValue(UserModel.class);
-                ///check
+
                 if (userModel != null && userModel.getJobList() != null && userModel.getJobList().size() > 0) {
                     if (isDelete == 0) {
                         taskList = userModel.getJobList().get(i).getTaskList();
                         List<TaskModel> resultTaskList = new ArrayList<>();
-//                        for (TaskModel taskModel : taskList) {
-//                            if (taskModel.getIsDelete() == 0)
-//                                resultTaskList.add(taskModel);
-//                        }
-
-                        for(int i = 0 ; i<taskList.size();i++){
-                            TaskModel taskModel = taskList.get(i);
-                            taskModel.setId(i);
+                        for (TaskModel taskModel : taskList) {
                             if (taskModel.getIsDelete() == 0)
                                 resultTaskList.add(taskModel);
                         }
@@ -171,4 +177,6 @@ public class ManageTaskFragment extends Fragment {
             }
         });
     }
-}
+
+
+    }
