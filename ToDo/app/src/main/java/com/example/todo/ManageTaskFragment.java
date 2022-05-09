@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,12 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.todo.Adapter.ToDoAdapter;
-import com.example.todo.Model.JobModel;
 import com.example.todo.Model.TaskModel;
 import com.example.todo.Model.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,18 +46,10 @@ public class ManageTaskFragment extends Fragment {
     private DatabaseReference mDatabase;
     private int currentJob = 0;
     private int isDelete = 0;
-
-    public int getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(int isDelete) {
-        this.isDelete = isDelete;
-    }
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     public ManageTaskFragment() {
         // Required empty public constructor
     }
@@ -81,6 +70,14 @@ public class ManageTaskFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
 
     public int getCurrentJob() {
@@ -148,21 +145,25 @@ public class ManageTaskFragment extends Fragment {
                     if (isDelete == 0) {
                         taskList = userModel.getJobList().get(i).getTaskList();
                         List<TaskModel> resultTaskList = new ArrayList<>();
-                        for (TaskModel taskModel : taskList) {
-                            if (taskModel.getIsDelete() == 0)
-                                resultTaskList.add(taskModel);
+                        if (taskList != null && taskList.size() > 0) {
+                            for (TaskModel taskModel : taskList) {
+                                if (taskModel.getIsDelete() == 0)
+                                    resultTaskList.add(taskModel);
+                            }
+                            recyclerView.setAdapter(taskAdapter);
+                            taskAdapter.setTasks(resultTaskList);
                         }
-                        recyclerView.setAdapter(taskAdapter);
-                        taskAdapter.setTasks(resultTaskList);
+
                     }
                     if (isDelete == 1) {
                         List<TaskModel> resultTaskList = new ArrayList<>();
-                        for(int j = 0; j < userModel.getJobList().size();j++)
-                        {
+                        for (int j = 0; j < userModel.getJobList().size(); j++) {
                             taskList = userModel.getJobList().get(j).getTaskList();
-                            for (TaskModel taskModel : taskList) {
-                                if (taskModel.getIsDelete() == 1)
-                                    resultTaskList.add(taskModel);
+                            if (taskList != null && taskList.size() > 0) {
+                                for (TaskModel taskModel : taskList) {
+                                    if (taskModel.getIsDelete() == 1)
+                                        resultTaskList.add(taskModel);
+                                }
                             }
                         }
                         recyclerView.setAdapter(taskAdapter);
@@ -179,4 +180,4 @@ public class ManageTaskFragment extends Fragment {
     }
 
 
-    }
+}

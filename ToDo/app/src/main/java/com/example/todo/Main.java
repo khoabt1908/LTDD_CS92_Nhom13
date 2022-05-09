@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +21,7 @@ import com.example.todo.Model.TaskModel;
 import com.example.todo.Model.UserModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -62,6 +64,8 @@ public class Main extends AppCompatActivity {
         Menu menuNav = navigationView.getMenu();
         MenuItem logoutItem = menuNav.findItem(R.id.logOutDrawer);
         MenuItem deleteItem = menuNav.findItem(R.id.deleteListDrawer);
+        MenuItem addJobItem = menuNav.findItem(R.id.createListDrawer);
+        MenuItem deleteJobItem = topAppBar.getMenu().findItem(R.id.deleteJob);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -69,7 +73,7 @@ public class Main extends AppCompatActivity {
 //
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
 //
-//
+
 //
 //        JobModel jobModel = new JobModel();
 //        UserModel userModel = new UserModel();
@@ -83,15 +87,17 @@ public class Main extends AppCompatActivity {
 //
 //
 //
+//        UUID uuid = UUID.randomUUID();
 //
 //
-//        jobModel.setId(1);
+//        jobModel.setId(uuid.toString());
 //        jobModel.setName("job1");
 //
-//        jobModel2.setId(2);
+//       UUID  uuid2 = UUID.randomUUID();
+//        jobModel2.setId(uuid2.toString());
 //        jobModel2.setName("job2 ");
 //
-//         UUID uuid = UUID.randomUUID();
+//         uuid = UUID.randomUUID();
 //
 //        for (int i = 0; i < 10; i++) {
 //            TaskModel taskModel = new TaskModel();
@@ -118,11 +124,11 @@ public class Main extends AppCompatActivity {
 //        jobModel.setTaskList(taskModels);
 //
 //
-//        jobModel2.setTaskList(taskModels2);
+//        jobModel2.setTaskList(taskModels);
 //
 //
 //        jobModels.add(jobModel);
-//        jobModels.add(jobModel);
+//        jobModels.add(jobModel2);
 //
 //        userModel.setJobList(jobModels);
 //        userModel.setId(user.getUid());
@@ -159,13 +165,9 @@ public class Main extends AppCompatActivity {
                                     taskModel.setEndDate("");
                                     taskModel.setIsDelete(0);
 
-//                                    DatabaseReference locationsRef = mDatabase.child("S5zFSnTQr4TM1gSvQzF8dykrxmo1/jobList/0/taskList");
                                     addTaskToDB(taskModel);
 
                                 }
-
-//                                Menu menu = navigationView.getMenu();
-//                                menu.add(R.id.group1, Menu.NONE, 0, editTextInput).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(false).setCheckable(true);
                             }
                         })
                         .setNegativeButton("Hủy", null)
@@ -179,23 +181,34 @@ public class Main extends AppCompatActivity {
                 Fragment search = new SearchFragment();
                 Fragment manageTask = new ManageTaskFragment();
                 Fragment user = new UserFragment();
+                AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) topAppBar.getLayoutParams();
 
                 if (item.getItemId() == R.id.page_1) {
                     loadManageTaskFragment(manageTask, currentJob, 0);
                     addTask.show();
                     topAppBar.setTitle("ToDo");
+                    params.height = 154;
+                    topAppBar.setLayoutParams(params);
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
                     return true;
                 }
                 if (item.getItemId() == R.id.page_2) {
                     loadSearchFragment(search);
                     topAppBar.setTitle("Tìm kiếm");
+                    params.height = 0;
+                    topAppBar.setLayoutParams(params);
                     addTask.hide();
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     return true;
                 }
                 if (item.getItemId() == R.id.page_3) {
                     loadUserFragment(user);
                     topAppBar.setTitle("Quản lý tài khoản");
+                    params.height = 0;
+                    topAppBar.setLayoutParams(params);
                     addTask.hide();
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     return true;
                 }
                 return false;
@@ -220,8 +233,58 @@ public class Main extends AppCompatActivity {
                 return false;
             }
         });
+        addJobItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                EditText ten = new EditText(Main.this);
+                ten.setMaxLines(1);
+                AlertDialog dialog = new AlertDialog.Builder(Main.this)
+                        .setTitle("Thêm mới danh sách")
+                        .setMessage("Nhập tên danh sách")
+                        .setView(ten)
+                        .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String editTextInput = ten.getText().toString();
+                                if (!editTextInput.isEmpty()) {
+                                    UUID uuid = UUID.randomUUID();
+                                    Date date = new Date();
+                                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                                    String strDate;
+                                    strDate = formatter.format(date);
 
+                                    JobModel jobModel = new JobModel();
+                                    jobModel.setId(uuid.toString());
+                                    jobModel.setName(editTextInput);
+                                    jobModel.setStartDate(strDate);
 
+                                    addJobToDB(jobModel);
+                                }
+                            }
+                        })
+                        .setNegativeButton("Hủy", null)
+                        .create();
+                dialog.show();
+                return false;
+            }
+        });
+        deleteJobItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                new MaterialAlertDialogBuilder(Main.this)
+                        .setTitle("Cảnh báo")
+                        .setMessage("Bạn có chắc chắn xoá danh sách này không ?")
+                        .setNegativeButton("Huỷ", (dialogInterface, i) -> {
+                        })
+                        .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
+                            deleteJobToDB();
+                        })
+                        .show();
+
+                return false;
+            }
+        });
+        
         deleteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -243,10 +306,11 @@ public class Main extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getGroupId() == R.id.group1) {
                     currentJob = item.getItemId();
+                    System.out.println(item.getItemId());
                     ManageTaskFragment manageTaskFragment = new ManageTaskFragment();
                     loadManageTaskFragment(manageTaskFragment, currentJob, 0);
                 }
-                if (item == logoutItem)
+                if (item == logoutItem || item == addJobItem)
                     return false;
                 item.setChecked(true);
                 drawerLayout.close();
@@ -271,51 +335,7 @@ public class Main extends AppCompatActivity {
             }
         });
 
-//        mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                UserModel userModel = snapshot.getValue(UserModel.class);
-//                if (userModel == null) {
-//                    UserModel userModel1 = new UserModel();
-//                    userModel1.setId(user.getUid());
-//                    mDatabase.child(user.getUid()).setValue(userModel1);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                System.out.println(error.toException());
-//            }
-//        });
-
-
-
-//        mDatabase.child(user.getUid() + "/jobList").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                List<JobModel> jobModelList = new ArrayList<>();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    JobModel jobModel = dataSnapshot.getValue(JobModel.class);
-//                    jobModelList.add(jobModel);
-//                }
-//                if (jobModelList != null && jobModelList.size() > 0)
-//                    for (int i = 0; i < jobModelList.size(); i++) {
-//                        JobModel jobModel = jobModelList.get(i);
-//                        Menu menu = navigationView.getMenu();
-//                        if (i == 0) {
-//                            menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(true).setCheckable(true);
-//                        } else
-//                            menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(false).setCheckable(true);
-//                    }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-        mDatabase.child(user.getUid() + "/jobList").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(user.getUid() + "/jobList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<JobModel> jobModelList = new ArrayList<>();
@@ -323,15 +343,22 @@ public class Main extends AppCompatActivity {
                     JobModel jobModel = dataSnapshot.getValue(JobModel.class);
                     jobModelList.add(jobModel);
                 }
+
                 if (jobModelList != null && jobModelList.size() > 0)
-                    for (int i = 0; i < jobModelList.size(); i++) {
-                        JobModel jobModel = jobModelList.get(i);
+                    for (int j = 0; j < jobModelList.size()+1; j++) {
                         Menu menu = navigationView.getMenu();
-                        if (i == 0) {
-                            menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(true).setCheckable(true);
-                        } else
-                            menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(false).setCheckable(true);
+                        menu.removeItem(j);
                     }
+                for (int i = 0; i < jobModelList.size(); i++) {
+                    JobModel jobModel = jobModelList.get(i);
+                    Menu menu = navigationView.getMenu();
+                    if (i == 0) {
+                        ManageTaskFragment manageTaskFragment = new ManageTaskFragment();
+                        loadManageTaskFragment(manageTaskFragment,0,0);
+                        menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(true).setCheckable(true);
+                    } else
+                        menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(false).setCheckable(true);
+                }
             }
 
             @Override
@@ -384,4 +411,29 @@ public class Main extends AppCompatActivity {
         });
     }
 
+    private void addJobToDB(JobModel jobModel) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Task<DataSnapshot> dataSnapshotTask = mDatabase.child(user.getUid()).get();
+        dataSnapshotTask.addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                userModel.getJobList().add(jobModel);
+                mDatabase.child(user.getUid()).setValue(userModel);
+            }
+        });
+    }
+
+    private void deleteJobToDB(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Task<DataSnapshot> dataSnapshotTask = mDatabase.child(user.getUid()).get();
+        dataSnapshotTask.addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                userModel.getJobList().remove(currentJob);
+                mDatabase.child(user.getUid()).setValue(userModel);
+            }
+        });
+    }
 }

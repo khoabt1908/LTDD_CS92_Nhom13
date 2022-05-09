@@ -19,7 +19,6 @@
             android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.AppBarLayout
-
             android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -28,7 +27,7 @@
                     android:id="@+id/topAppBar"
                     style="@style/Widget.MaterialComponents.Toolbar.Primary"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="154px"
                     app:menu="@menu/top_app_bar"
                     app:navigationIcon="@drawable/ic_outline_format_list_bulleted_24"
                     app:title="@string/page_title" />
