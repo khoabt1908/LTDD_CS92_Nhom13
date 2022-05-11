@@ -14,11 +14,6 @@
             android:orderInCategory="1"
             android:title="@string/createListDrawer" />
         <item
-            android:id="@+id/editListDrawer"
-            android:icon="@drawable/ic_baseline_create_24"
-            android:orderInCategory="1"
-            android:title="@string/editListDrawer" />
-        <item
             android:id="@+id/deleteListDrawer"
             android:icon="@drawable/ic_baseline_delete_outline_24"
             android:orderInCategory="1"
@@ -29,7 +24,6 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/helpDrawer"
-
             android:icon="@drawable/ic_sharp_help_outline_24"
             android:orderInCategory="2"
             android:title="@string/helpDrawer" />

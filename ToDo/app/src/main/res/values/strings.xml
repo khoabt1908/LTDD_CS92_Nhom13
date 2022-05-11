@@ -6,7 +6,7 @@
     <string name="user">Người dùng</string>
     <string name="createListDrawer">Danh sách mới</string>
     <string name="createListFilterDrawer">Danh sách bộ lọc mới</string>
-    <string name="editListDrawer">Chỉnh sửa danh sách</string>
+    <string name="editListDrawer">Chỉnh sửa tên danh sách</string>
     <string name="page_title">To Do</string>
     <string name="favorite">Yêu thích</string>
     <string name="searchBar">Tìm kiếm</string>

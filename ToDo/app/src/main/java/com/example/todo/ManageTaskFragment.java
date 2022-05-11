@@ -135,7 +135,7 @@ public class ManageTaskFragment extends Fragment {
     }
 
     public void loadData(int i, int isDelete) {
-        mDatabase.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println(snapshot.getValue());
@@ -143,17 +143,19 @@ public class ManageTaskFragment extends Fragment {
 
                 if (userModel != null && userModel.getJobList() != null && userModel.getJobList().size() > 0) {
                     if (isDelete == 0) {
-                        taskList = userModel.getJobList().get(i).getTaskList();
-                        List<TaskModel> resultTaskList = new ArrayList<>();
-                        if (taskList != null && taskList.size() > 0) {
-                            for (TaskModel taskModel : taskList) {
-                                if (taskModel.getIsDelete() == 0)
-                                    resultTaskList.add(taskModel);
+                        if(i<=userModel.getJobList().size()-1)
+                        {
+                            taskList = userModel.getJobList().get(i).getTaskList();
+                            List<TaskModel> resultTaskList = new ArrayList<>();
+                            if (taskList != null && taskList.size() > 0) {
+                                for (TaskModel taskModel : taskList) {
+                                    if (taskModel.getIsDelete() == 0)
+                                        resultTaskList.add(taskModel);
+                                }
+                                recyclerView.setAdapter(taskAdapter);
+                                taskAdapter.setTasks(resultTaskList);
                             }
-                            recyclerView.setAdapter(taskAdapter);
-                            taskAdapter.setTasks(resultTaskList);
                         }
-
                     }
                     if (isDelete == 1) {
                         List<TaskModel> resultTaskList = new ArrayList<>();

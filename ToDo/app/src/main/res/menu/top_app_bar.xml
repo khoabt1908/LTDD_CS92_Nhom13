@@ -21,5 +21,10 @@
         android:icon="@drawable/ic_baseline_delete_outline_24"
         android:title="@string/delete"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/editJob"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="@string/editListDrawer"
+        app:showAsAction="never" />
 
 </menu>
