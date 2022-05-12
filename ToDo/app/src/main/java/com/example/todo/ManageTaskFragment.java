@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -104,15 +105,16 @@ public class ManageTaskFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
         Bundle args = getArguments();
         int index = args.getInt("index", 0);
         this.currentJob = index;
         int isDelete = args.getInt("isDelete", 0);
         this.isDelete = isDelete;
 
+        if (isDelete == 0) {
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+        }
         loadData(index, isDelete);
         swipeRefreshLayout.setColorScheme(R.color.blue, R.color.purple, R.color.green, R.color.orange);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -130,6 +132,22 @@ public class ManageTaskFragment extends Fragment {
         return rootview;
     }
 
+    public void loadEditFragment(String itemId, int currentJob) {
+
+        EditTaskFragment editTaskFragment = new EditTaskFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, editTaskFragment);
+        transaction.addToBackStack(null);
+
+        Bundle args = new Bundle();
+        args.putString("itemId", itemId);
+        args.putInt("currentJob", currentJob);
+        editTaskFragment.setArguments(args);
+
+        transaction.commit();
+        ((Main) getActivity()).hideAll();
+    }
+
     public void scrollToBot() {
         recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
     }
@@ -143,8 +161,7 @@ public class ManageTaskFragment extends Fragment {
 
                 if (userModel != null && userModel.getJobList() != null && userModel.getJobList().size() > 0) {
                     if (isDelete == 0) {
-                        if(i<=userModel.getJobList().size()-1)
-                        {
+                        if (i <= userModel.getJobList().size() - 1) {
                             taskList = userModel.getJobList().get(i).getTaskList();
                             List<TaskModel> resultTaskList = new ArrayList<>();
                             if (taskList != null && taskList.size() > 0) {

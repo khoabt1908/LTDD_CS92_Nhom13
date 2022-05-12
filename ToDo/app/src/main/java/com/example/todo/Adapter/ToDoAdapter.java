@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +22,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
@@ -56,17 +58,20 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         else
             holder.task.setPaintFlags(holder.task.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
+        if (activity.getIsDelete() == 1) {
+            holder.task.setClickable(false);
+        }
 
-        holder.task.setOnClickListener(new View.OnClickListener() {
+        holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                System.out.println("check date " + item.getEndDate());
-                if (holder.task.isChecked()) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                System.out.println(b);
+                changeTaskStatus(item.getId(), b);
+                if (b) {
                     holder.task.setPaintFlags(holder.task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
                     holder.task.setPaintFlags(holder.task.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 }
-
             }
         });
     }
@@ -74,6 +79,36 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     public void setTasks(List<TaskModel> todoList) {
         this.todoList = todoList;
         notifyDataSetChanged();
+    }
+
+    public void changeTaskStatus(String id, boolean newStatus) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Task<DataSnapshot> dataSnapshotTask = mDatabase.child(user.getUid()).get();
+        dataSnapshotTask.addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                for (int i = 0; i < userModel.getJobList()
+                        .get(activity.getCurrentJob()).getTaskList().size(); i++) {
+                    TaskModel taskModel = userModel.getJobList()
+                            .get(activity.getCurrentJob()).getTaskList().get(i);
+                    if (taskModel.getId().equals(id)) {
+                        if (newStatus) {
+                            Date date = new Date();
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                            String strDate;
+                            strDate = formatter.format(date);
+                            userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i).setEndDate(strDate);
+                        } else {
+                            userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i).setEndDate("");
+                        }
+                        userModel.getJobList()
+                                .get(activity.getCurrentJob()).getTaskList().get(i).setStatus(newStatus ? 1 : 0);
+                    }
+                }
+                mDatabase.child(user.getUid()).setValue(userModel);
+            }
+        });
     }
 
     public int getItemCount() {
@@ -85,7 +120,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     }
 
     public void editItem(int pos) {
-        System.out.println(pos + "edit");
+        TaskModel item = todoList.get(pos);
+        activity.loadEditFragment(item.getId(), activity.getCurrentJob());
     }
 
     public void deleteItem(int pos) {
@@ -102,7 +138,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
                 for (int i = 0; i < userModel.getJobList().get(activity.getCurrentJob()).getTaskList().size(); i++) {
                     TaskModel taskItem = userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i);
                     if (taskItem.getId().equals(item.getId())) {
-                        DatabaseReference currentItem  = mDatabase.child(user.getUid()).child("jobList")
+                        DatabaseReference currentItem = mDatabase.child(user.getUid()).child("jobList")
                                 .child(String.valueOf(activity.getCurrentJob())).child("taskList")
                                 .child(String.valueOf(i));
                         currentItem.setValue(item);

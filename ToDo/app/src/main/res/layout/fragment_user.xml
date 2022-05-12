@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
-            android:hint="Full Name"
+            android:hint="Họ và tên"
             android:textColorHint="@color/main_color"
             app:startIconDrawable="@drawable/vector_acc">
 
@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
-            android:hint="Phone Number"
+            android:hint="Số điện thoại"
             android:textColorHint="@color/main_color"
             app:startIconDrawable="@drawable/vector_contact">
 
@@ -133,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
-            android:hint="Password"
+            android:hint="Mật khẩu"
             android:textColorHint="@color/main_color"
             app:startIconDrawable="@drawable/vector_pass">
 
@@ -153,7 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginBottom="18dp"
-            android:text="🖊 Change Password"
+            android:text="🖊 Thay đổi mật khẩu"
             android:textAlignment="textEnd"
             android:textColor="#0173B7"
             android:textSize="15dp"
@@ -171,7 +171,7 @@
                 android:layout_height="50dp"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:background="@drawable/login_button"
-                android:text="Edit Profile"
+                android:text="Cập nhật thông tin"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -181,7 +181,7 @@
                 android:layout_height="50dp"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:background="@drawable/logout_button"
-                android:text="Log Out"
+                android:text="Đăng xuất"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 

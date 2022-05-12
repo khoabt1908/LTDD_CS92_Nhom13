@@ -77,71 +77,7 @@ public class Main extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         addTask = (FloatingActionButton) findViewById(R.id.floating_action_button);
-//
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
-//
-
-//
-//        JobModel jobModel = new JobModel();
-//        UserModel userModel = new UserModel();
-//
-//        JobModel jobModel2 = new JobModel();
-//
-//        ArrayList<TaskModel> taskModels = new ArrayList<>();
-//        ArrayList<TaskModel> taskModels2 = new ArrayList<>();
-//
-//        ArrayList<JobModel> jobModels = new ArrayList<>();
-//
-//
-//
-//        UUID uuid = UUID.randomUUID();
-//
-//
-//        jobModel.setId(uuid.toString());
-//        jobModel.setName("job1");
-//
-//       UUID  uuid2 = UUID.randomUUID();
-//        jobModel2.setId(uuid2.toString());
-//        jobModel2.setName("job2 ");
-//
-//         uuid = UUID.randomUUID();
-//
-//        for (int i = 0; i < 10; i++) {
-//            TaskModel taskModel = new TaskModel();
-//            taskModel.setStatus(1);
-//            taskModel.setTaskName("Task show");
-//            taskModel.setDescription("mo ta task 1");
-//             uuid = UUID.randomUUID();
-//            taskModel.setId(uuid.toString());
-//            taskModels.add(taskModel);
-//        }
-//
-//        for (int i = 0; i < 3; i++) {
-//            TaskModel taskModel2 = new TaskModel();
-//            taskModel2.setStatus(0);
-//            taskModel2.setTaskName("task detete");
-//            taskModel2.setDescription("mo ta task detete");
-//            taskModel2.setIsDelete(0);
-//             uuid = UUID.randomUUID();
-//            taskModel2.setId(uuid.toString());
-//            taskModels.add(taskModel2);
-//        }
-//
-//
-//        jobModel.setTaskList(taskModels);
-//
-//
-//        jobModel2.setTaskList(taskModels);
-//
-//
-//        jobModels.add(jobModel);
-//        jobModels.add(jobModel2);
-//
-//        userModel.setJobList(jobModels);
-//        userModel.setId(user.getUid());
-//
-//        mDatabase.child(user.getUid()).setValue(userModel);
-
 
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -426,7 +362,28 @@ public class Main extends AppCompatActivity {
 
             }
         });
+    }
 
+    public void onBack() {
+        ManageTaskFragment manageTask = new ManageTaskFragment();
+        loadManageTaskFragment(manageTask, currentJob, 0);
+        this.showAll();
+    }
+
+    public void hideAll() {
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) topAppBar.getLayoutParams();
+        params.height = 0;
+        topAppBar.setLayoutParams(params);
+        addTask.hide();
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void showAll() {
+        addTask.show();
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) topAppBar.getLayoutParams();
+        params.height = 154;
+        topAppBar.setLayoutParams(params);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
     private void loadSearchFragment(Fragment fragment) {
