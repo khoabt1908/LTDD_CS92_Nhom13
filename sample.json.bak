@@ -1,0 +1,58 @@
+{
+  "app-name": "todo",
+  "xyz": "....",
+  "users": [
+   "userid": {
+      "jobs": [
+        {
+          "id": 1,
+          "name": "list1",
+          "color": "#abcxyz",
+          "startdate": "abc",
+          "tasks": [
+            {
+              "id": 1,
+              "status": 1,
+              "name": "task1",
+              "description": "#abcxyz",
+              "startDate": "#abcxyz",
+              "endDate": "#abcxyz"
+            },
+            {
+              "id": 1,
+              "status": 1,
+              "name": "task2",
+              "description": "#abcxyz",
+              "startDate": "#abcxyz",
+              "endDate": "#abcxyz"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "lis2",
+          "color": "#abcxyz",
+          "startdate": "abc",
+          "tasks": [
+            {
+              "id": 1,
+              "status": 1,
+              "name": "task1 ",
+              "description": "#abcxyz",
+              "startDate": "#abcxyz",
+              "endDate": "#abcxyz"
+            },
+            {
+              "id": 1,
+              "status": 1,
+              "name": "task2",
+              "description": "#abcxyz",
+              "startDate": "#abcxyz",
+              "endDate": "#abcxyz"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

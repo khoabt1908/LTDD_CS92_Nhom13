@@ -1,58 +1,126 @@
 {
-  "app-name": "todo",
-  "xyz": "....",
-  "users": [
-   "userid": {
-      "jobs": [
+  "app-title": "To Do ",
+  "users": {
+    "S5zFSnTQr4TM1gSvQzF8dykrxmo1": {
+      "id": "S5zFSnTQr4TM1gSvQzF8dykrxmo1",
+      "jobList": [
         {
-          "id": 1,
-          "name": "list1",
-          "color": "#abcxyz",
-          "startdate": "abc",
-          "tasks": [
+          "id": "80a3f4ca-1ac4-4069-bcd8-db3b378469cf",
+          "name": "job2 ",
+          "taskList": [
             {
-              "id": 1,
+              "description": "mo ta task 1",
+              "id": "d2522620-3fc4-4fd0-b26f-23b47c1e7715",
+              "isDelete": 0,
               "status": 1,
-              "name": "task1",
-              "description": "#abcxyz",
-              "startDate": "#abcxyz",
-              "endDate": "#abcxyz"
+              "taskName": "Task show"
             },
             {
-              "id": 1,
+              "description": "mo ta task 1",
+              "id": "faae2973-2247-49bf-a926-755e73dbc564",
+              "isDelete": 0,
               "status": 1,
-              "name": "task2",
-              "description": "#abcxyz",
-              "startDate": "#abcxyz",
-              "endDate": "#abcxyz"
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task 1",
+              "id": "1a54735b-e6b4-4ed0-ae57-d836268311a2",
+              "isDelete": 0,
+              "status": 1,
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task 1",
+              "id": "b5801e25-b885-4d2f-b2f5-dd386faa7308",
+              "isDelete": 0,
+              "status": 1,
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task 1",
+              "id": "58a32047-bff3-4125-8113-708e45404fcd",
+              "isDelete": 0,
+              "status": 1,
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task 1",
+              "id": "f7e7d3c1-82b7-491e-abbf-b756ce1ef18a",
+              "isDelete": 0,
+              "status": 1,
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task 1",
+              "id": "37a045ea-8efe-483f-a0b4-ff1daf036819",
+              "isDelete": 0,
+              "status": 1,
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task 1",
+              "id": "703eeb07-dd79-40a9-afbb-99f1d4eff159",
+              "isDelete": 0,
+              "status": 1,
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task 1",
+              "id": "517dd513-cae5-4181-a591-dfd1937dff5c",
+              "isDelete": 0,
+              "status": 1,
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task 1",
+              "id": "ad790bb2-2ebb-4368-b33e-9668f5806237",
+              "isDelete": 0,
+              "status": 1,
+              "taskName": "Task show"
+            },
+            {
+              "description": "mo ta task detete",
+              "id": "e0fbffcf-5b3b-4688-acf3-e340868a60ea",
+              "isDelete": 0,
+              "status": 0,
+              "taskName": "task detete"
+            },
+            {
+              "description": "mo ta task detete",
+              "id": "23f122dd-c8cb-4e13-a3bc-21b88a6d762c",
+              "isDelete": 0,
+              "status": 0,
+              "taskName": "task detete"
+            },
+            {
+              "description": "mo ta task detete",
+              "id": "6fd884b5-e679-4fe8-adb3-f53d12c24367",
+              "isDelete": 0,
+              "status": 0,
+              "taskName": "task detete"
             }
           ]
         },
         {
-          "id": 2,
-          "name": "lis2",
-          "color": "#abcxyz",
-          "startdate": "abc",
-          "tasks": [
+          "id": "3e97da9d-2614-4b56-8137-76004a766972",
+          "name": "job3",
+          "startDate": "11/05/2022 11:06:04",
+          "taskList": [
             {
-              "id": 1,
-              "status": 1,
-              "name": "task1 ",
-              "description": "#abcxyz",
-              "startDate": "#abcxyz",
-              "endDate": "#abcxyz"
-            },
-            {
-              "id": 1,
-              "status": 1,
-              "name": "task2",
-              "description": "#abcxyz",
-              "startDate": "#abcxyz",
-              "endDate": "#abcxyz"
+              "description": "",
+              "endDate": "",
+              "id": "4871f08c-0c1c-437f-b0a7-8417fcc9ce79",
+              "isDelete": 1,
+              "startDate": "11/05/2022 11:06:09",
+              "status": 0,
+              "taskName": "task1"
             }
           ]
         }
       ]
+    },
+    "VI3nN5vNy9e1Db8DhYyV5yBRFb53": {
+      "id": "VI3nN5vNy9e1Db8DhYyV5yBRFb53"
     }
-  ]
+  }
 }
