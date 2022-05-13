@@ -143,31 +143,29 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
                         {
                             TaskModel taskItem = taskList.get(j);
                             if (taskItem.getId().equals(item.getId())) {
-                                DatabaseReference currentItem = mDatabase.child(user.getUid()).child("jobList")
-                                        .child(String.valueOf(i)).child("taskList")
-                                        .child(String.valueOf(j));
-                                currentItem.setValue(item);
-                                userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i).setIsDelete(1);
-                                activity.loadData(activity.getCurrentJob(), activity.getIsDelete());
+
+                                userModel.getJobList().get(i).getTaskList().get(j).setIsDelete(0);
+                                mDatabase.child(user.getUid()).setValue(userModel);
+
+//                                activity.loadData(activity.getCurrentJob(), activity.getIsDelete());
                                 break;
                             }
                         }
                     }
                 }
 
-                for (int i = 0; i < userModel.getJobList().get(activity.getCurrentJob()).getTaskList().size(); i++) {
-                    TaskModel taskItem = userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i);
-                    if (taskItem.getId().equals(item.getId())) {
-                        DatabaseReference currentItem = mDatabase.child(user.getUid()).child("jobList")
-                                .child(String.valueOf(activity.getCurrentJob())).child("taskList")
-                                .child(String.valueOf(i));
-                        currentItem.setValue(item);
-                        userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i).setIsDelete(1);
-                        activity.loadData(activity.getCurrentJob(), activity.getIsDelete());
-                        break;
-                    }
-                }
-                mDatabase.child(user.getUid()).setValue(userModel);
+//                for (int i = 0; i < userModel.getJobList().get(activity.getCurrentJob()).getTaskList().size(); i++) {
+//                    TaskModel taskItem = userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i);
+//                    if (taskItem.getId().equals(item.getId())) {
+//                        DatabaseReference currentItem = mDatabase.child(user.getUid()).child("jobList")
+//                                .child(String.valueOf(activity.getCurrentJob())).child("taskList")
+//                                .child(String.valueOf(i));
+//                        currentItem.setValue(item);
+//                        userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i).setIsDelete(1);
+//                        activity.loadData(activity.getCurrentJob(), activity.getIsDelete());
+//                        break;
+//                    }
+//                }
             }
         });
     }

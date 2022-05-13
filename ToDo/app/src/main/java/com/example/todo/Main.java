@@ -284,6 +284,7 @@ public class Main extends AppCompatActivity {
                 if (item.getGroupId() == R.id.group1) {
                     isDelete = 0;
                     addTask.show();
+                    topAppBar.setTitle("ToDo");
                     currentJob = item.getItemId();
                     ManageTaskFragment manageTaskFragment = new ManageTaskFragment();
                     loadManageTaskFragment(manageTaskFragment, currentJob, 0);
@@ -330,7 +331,8 @@ public class Main extends AppCompatActivity {
                 if (jobModelList != null && jobModelList.size() > 0) {
                     countJob = jobModelList.size();
                     isHasJob = true;
-                    addTask.show();
+                    if (isDelete == 0)
+                        addTask.show();
                     Drawable icon = getResources().getDrawable(R.drawable.ic_baseline_more_vert_24, getTheme());
                     topAppBar.setOverflowIcon(icon);
                     for (int j = 0; j < jobModelList.size() + 1; j++) {
@@ -340,7 +342,7 @@ public class Main extends AppCompatActivity {
                     for (int i = 0; i < jobModelList.size(); i++) {
                         JobModel jobModel = jobModelList.get(i);
                         Menu menu = navigationView.getMenu();
-                        if (i == currentJob) {
+                        if (i == currentJob && isDelete != 1) {
                             if (jobModelList.size() != countJob) {
                                 ManageTaskFragment manageTaskFragment = new ManageTaskFragment();
                                 loadManageTaskFragment(manageTaskFragment, 0, 0);
