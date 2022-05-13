@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.Adapter.ToDoAdapter;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private ToDoAdapter toDoAdapter;
@@ -36,7 +37,18 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
             //delete
             if (isDelete == 0)
                 toDoAdapter.deleteItem(position);
-            else toDoAdapter.cfDeleteItem(position);
+            else {
+                new MaterialAlertDialogBuilder(toDoAdapter.getContext())
+                        .setTitle("Xác nhận")
+                        .setMessage("Bạn có chắc chắn đăng xuất ?")
+                        .setNegativeButton("Huỷ", (dialogInterface, i) -> {
+                            toDoAdapter.notifyItemChanged(viewHolder.getBindingAdapterPosition());
+                        })
+                        .setPositiveButton("Xác nhận", (dialogInterface, i) -> {
+                            toDoAdapter.cfDeleteItem(position);
+                        })
+                        .show();
+            }
         } else {
             if (isDelete == 0)
                 toDoAdapter.editItem(position);

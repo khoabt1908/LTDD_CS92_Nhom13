@@ -1,6 +1,7 @@
 package com.example.todo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,16 @@ import android.widget.CompoundButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todo.FirstLogin;
+import com.example.todo.Login;
+import com.example.todo.Main;
 import com.example.todo.ManageTaskFragment;
 import com.example.todo.Model.TaskModel;
 import com.example.todo.Model.UserModel;
 import com.example.todo.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +31,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import vn.thanguit.toastperfect.ToastPerfect;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private List<TaskModel> todoList;
@@ -121,7 +128,33 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     }
 
     public void cfDeleteItem(int pos){
+        TaskModel item = todoList.get(pos);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Task<DataSnapshot> dataSnapshotTask = mDatabase.child(user.getUid()).get();
+        dataSnapshotTask.addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                UserModel userModel = dataSnapshot.getValue(UserModel.class);
 
+                List<TaskModel> taskList = new ArrayList<>();
+                for (int i = 0; i < userModel.getJobList().size(); i++) {
+                    taskList = userModel.getJobList().get(i).getTaskList();
+                    if (taskList != null && taskList.size() > 0) {
+                        for (int j=0;j<taskList.size();j++)
+                        {
+                            TaskModel taskItem = taskList.get(j);
+                            if (taskItem.getId().equals(item.getId())) {
+                                userModel.getJobList().get(i).getTaskList().remove(j);
+                                mDatabase.child(user.getUid()).setValue(userModel);
+                                ToastPerfect.makeText(getContext(), ToastPerfect.SUCCESS, "Xoá hoàn tất"
+                                        , ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public void recoveyItem(int pos){
@@ -146,26 +179,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
                                 userModel.getJobList().get(i).getTaskList().get(j).setIsDelete(0);
                                 mDatabase.child(user.getUid()).setValue(userModel);
-
-//                                activity.loadData(activity.getCurrentJob(), activity.getIsDelete());
                                 break;
                             }
                         }
                     }
                 }
-
-//                for (int i = 0; i < userModel.getJobList().get(activity.getCurrentJob()).getTaskList().size(); i++) {
-//                    TaskModel taskItem = userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i);
-//                    if (taskItem.getId().equals(item.getId())) {
-//                        DatabaseReference currentItem = mDatabase.child(user.getUid()).child("jobList")
-//                                .child(String.valueOf(activity.getCurrentJob())).child("taskList")
-//                                .child(String.valueOf(i));
-//                        currentItem.setValue(item);
-//                        userModel.getJobList().get(activity.getCurrentJob()).getTaskList().get(i).setIsDelete(1);
-//                        activity.loadData(activity.getCurrentJob(), activity.getIsDelete());
-//                        break;
-//                    }
-//                }
             }
         });
     }
@@ -200,6 +218,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
                 mDatabase.child(user.getUid()).setValue(userModel);
             }
         });
+        ToastPerfect.makeText(getContext(), ToastPerfect.SUCCESS, "Đã chuyển công việc vào thùng rác", ToastPerfect.BOTTOM, ToastPerfect.LENGTH_SHORT).show();
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
