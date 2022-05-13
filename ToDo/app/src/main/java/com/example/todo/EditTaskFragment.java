@@ -99,9 +99,6 @@ public class EditTaskFragment extends Fragment {
         int currentJob = args.getInt("currentJob", 0);
         this.currentJob = currentJob;
 
-        System.out.println(this.currentItemId);
-        System.out.println(this.currentJob);
-
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

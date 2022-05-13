@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -15,9 +14,12 @@ import com.example.todo.Adapter.ToDoAdapter;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private ToDoAdapter toDoAdapter;
+    private int isDelete;
 
-    public RecyclerItemTouchHelper(ToDoAdapter toDoAdapter) {
+
+    public RecyclerItemTouchHelper(ToDoAdapter toDoAdapter, int isDelete) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        this.isDelete = isDelete;
         this.toDoAdapter = toDoAdapter;
     }
 
@@ -30,19 +32,24 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getBindingAdapterPosition();
-        if (direction == ItemTouchHelper.LEFT){
+        if (direction == ItemTouchHelper.LEFT) {
             //delete
-            toDoAdapter.deleteItem(position);
-        }
-        else{
-            //edit
-            toDoAdapter.editItem(position);
+            if (isDelete == 0)
+                toDoAdapter.deleteItem(position);
+            else toDoAdapter.cfDeleteItem(position);
+        } else {
+            if (isDelete == 0)
+                toDoAdapter.editItem(position);
+            else
+                toDoAdapter.recoveyItem(position);
         }
 
     }
 
     @Override
-    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView
+            , @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY
+            , int actionState, boolean isCurrentlyActive) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         Drawable icon;
@@ -51,7 +58,8 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         int backgroundCornerOffset = 20;
 
         if (dX > 0) {
-            icon = ContextCompat.getDrawable(toDoAdapter.getContext(), R.drawable.ic_baseline_edit_24);
+            icon = ContextCompat.getDrawable(toDoAdapter.getContext(),
+                    (isDelete == 0) ? R.drawable.ic_baseline_edit_24 : R.drawable.ic_baseline_refresh_24);
             background = new ColorDrawable(ContextCompat.getColor(toDoAdapter.getContext(), R.color.green));
         } else {
             icon = ContextCompat.getDrawable(toDoAdapter.getContext(), R.drawable.delete_white);
@@ -69,15 +77,15 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
             background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft()
                     + ((int) dX) + backgroundCornerOffset, itemView.getBottom());
-        }else if(dX < 0){
+        } else if (dX < 0) {
             int iconLeft = itemView.getRight() - iconMargin - icon.getIntrinsicHeight();
             int iconRigth = itemView.getRight() - iconMargin;
             icon.setBounds(iconLeft, iconTop, iconRigth, iconBottom);
 
-            background.setBounds(itemView.getRight() + ((int)dX) - backgroundCornerOffset,
+            background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
                     itemView.getTop(), itemView.getRight(), itemView.getBottom());
-        }else
-            background.setBounds(0,0,0,0);
+        } else
+            background.setBounds(0, 0, 0, 0);
         background.draw(c);
         icon.draw(c);
     }

@@ -111,10 +111,9 @@ public class ManageTaskFragment extends Fragment {
         int isDelete = args.getInt("isDelete", 0);
         this.isDelete = isDelete;
 
-        if (isDelete == 0) {
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
-            itemTouchHelper.attachToRecyclerView(recyclerView);
-        }
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter, isDelete));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         loadData(index, isDelete);
         swipeRefreshLayout.setColorScheme(R.color.blue, R.color.purple, R.color.green, R.color.orange);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -156,7 +155,6 @@ public class ManageTaskFragment extends Fragment {
         mDatabase.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println(snapshot.getValue());
                 UserModel userModel = snapshot.getValue(UserModel.class);
 
                 if (userModel != null && userModel.getJobList() != null && userModel.getJobList().size() > 0) {
@@ -193,7 +191,6 @@ public class ManageTaskFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println(error.toException());
             }
         });
     }

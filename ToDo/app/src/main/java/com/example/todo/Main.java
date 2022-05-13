@@ -55,14 +55,15 @@ public class Main extends AppCompatActivity {
     private int currentJob = 0;
     private boolean isHasJob = false;
     private int countJob = 0;
+    private int isDelete = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Fragment manageTask = new ManageTaskFragment();
-        loadManageTaskFragment(manageTask, currentJob, 0);
         topAppBar = (MaterialToolbar) findViewById(R.id.topAppBar);
+        loadManageTaskFragment(manageTask, currentJob, isDelete);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         Menu menuNav = navigationView.getMenu();
@@ -127,7 +128,7 @@ public class Main extends AppCompatActivity {
                 AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) topAppBar.getLayoutParams();
 
                 if (item.getItemId() == R.id.page_1) {
-                    loadManageTaskFragment(manageTask, currentJob, 0);
+                    loadManageTaskFragment(manageTask, currentJob, isDelete);
                     if (isHasJob == true) {
                         addTask.show();
                     }
@@ -260,8 +261,12 @@ public class Main extends AppCompatActivity {
         deleteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                isDelete = 1;
                 ManageTaskFragment manageTaskFragment = new ManageTaskFragment();
                 loadManageTaskFragment(manageTaskFragment, currentJob, 1);
+                addTask.hide();
+                topAppBar.setTitle("Thùng rác");
+                topAppBar.setOverflowIcon(null);
                 return false;
             }
         });
@@ -277,8 +282,9 @@ public class Main extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getGroupId() == R.id.group1) {
+                    isDelete = 0;
+                    addTask.show();
                     currentJob = item.getItemId();
-                    System.out.println(item.getItemId());
                     ManageTaskFragment manageTaskFragment = new ManageTaskFragment();
                     loadManageTaskFragment(manageTaskFragment, currentJob, 0);
                 }
@@ -309,7 +315,6 @@ public class Main extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println(error.toException());
             }
         });
 
@@ -323,28 +328,29 @@ public class Main extends AppCompatActivity {
                 }
 
                 if (jobModelList != null && jobModelList.size() > 0) {
-                    if (jobModelList.size() != countJob) {
-                        countJob = jobModelList.size();
-                        isHasJob = true;
-                        addTask.show();
-                        Drawable icon = getResources().getDrawable(R.drawable.ic_baseline_more_vert_24, getTheme());
-                        topAppBar.setOverflowIcon(icon);
-                        for (int j = 0; j < jobModelList.size() + 1; j++) {
-                            Menu menu = navigationView.getMenu();
-                            menu.removeItem(j);
-                        }
-                        for (int i = 0; i < jobModelList.size(); i++) {
-                            JobModel jobModel = jobModelList.get(i);
-                            Menu menu = navigationView.getMenu();
-                            if (i == 0) {
+                    countJob = jobModelList.size();
+                    isHasJob = true;
+                    addTask.show();
+                    Drawable icon = getResources().getDrawable(R.drawable.ic_baseline_more_vert_24, getTheme());
+                    topAppBar.setOverflowIcon(icon);
+                    for (int j = 0; j < jobModelList.size() + 1; j++) {
+                        Menu menu = navigationView.getMenu();
+                        menu.removeItem(j);
+                    }
+                    for (int i = 0; i < jobModelList.size(); i++) {
+                        JobModel jobModel = jobModelList.get(i);
+                        Menu menu = navigationView.getMenu();
+                        if (i == currentJob) {
+                            if (jobModelList.size() != countJob) {
                                 ManageTaskFragment manageTaskFragment = new ManageTaskFragment();
                                 loadManageTaskFragment(manageTaskFragment, 0, 0);
-                                menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(true).setCheckable(true);
-                            } else
-                                menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(false).setCheckable(true);
-                        }
+                            }
 
+                            menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(true).setCheckable(true);
+                        } else
+                            menu.add(R.id.group1, Menu.FIRST - 1 + i, 0, jobModel.getName()).setIcon(R.drawable.ic_outline_format_list_bulleted_24).setChecked(false).setCheckable(true);
                     }
+
 
                 } else {
                     isHasJob = false;
@@ -403,6 +409,8 @@ public class Main extends AppCompatActivity {
     }
 
     private void loadManageTaskFragment(Fragment fragment, int i, int isDelete) {
+        Drawable icon = getResources().getDrawable(R.drawable.ic_baseline_more_vert_24, getTheme());
+        topAppBar.setOverflowIcon(icon);
         Bundle args = new Bundle();
         args.putInt("index", i);
         args.putInt("isDelete", isDelete);
