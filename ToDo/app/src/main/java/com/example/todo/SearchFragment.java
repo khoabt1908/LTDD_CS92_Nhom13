@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -128,7 +129,7 @@ public class SearchFragment extends Fragment {
                         taskList = userModel.getJobList().get(j).getTaskList();
                         if (taskList != null && taskList.size() > 0) {
                             for (TaskModel taskModel : taskList) {
-                                if (taskModel.getTaskName().indexOf(keyWord) != -1)
+                                if (taskModel.getTaskName().toLowerCase(Locale.ROOT).indexOf(keyWord.toLowerCase(Locale.ROOT)) != -1)
                                     resultTaskList.add(taskModel);
                             }
                         }
