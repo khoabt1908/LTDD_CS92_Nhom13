@@ -7,43 +7,33 @@
     android:orientation="vertical"
     tools:context=".SearchFragment">
 
-    <LinearLayout
-        android:padding="@dimen/activity_vertical_margin"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="12dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
+            android:id="@+id/keyWord"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="Nhập từ khoá"
             android:textColorHint="@color/main_color">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtKey"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/login_button"
-            android:text="Login"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            tools:ignore="SpeakableTextPresentCheck" />
-    </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/main_color"
-            android:id="@+id/searchList"
+            android:id="@+id/listTaskSearch"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="62dp"
             android:nestedScrollingEnabled="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </LinearLayout>

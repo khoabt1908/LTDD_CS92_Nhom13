@@ -7,7 +7,6 @@
         android:title="@string/task_list" />
     <item
         android:id="@+id/page_2"
-        android:visible="false"
         android:enabled="true"
         android:icon="@drawable/search_icon"
         android:title="@string/search" />

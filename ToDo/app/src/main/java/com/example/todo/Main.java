@@ -1,17 +1,22 @@
 package com.example.todo;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -56,6 +61,8 @@ public class Main extends AppCompatActivity {
     private boolean isHasJob = false;
     private int countJob = 0;
     private int isDelete = 0;
+
+    private String keyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +117,6 @@ public class Main extends AppCompatActivity {
                                     taskModel.setIsDelete(0);
 
                                     addTaskToDB(taskModel);
-
                                 }
                             }
                         })
@@ -487,5 +493,34 @@ public class Main extends AppCompatActivity {
                 mDatabase.child(user.getUid()).setValue(userModel);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.top_app_bar, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchManager searchManager = (SearchManager) Main.this.getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = null;
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(Main.this.getComponentName()));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Toast.makeText(Main.this, "aaaa", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Toast.makeText(Main.this, "aaaa", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 }

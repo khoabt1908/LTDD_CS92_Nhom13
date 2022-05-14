@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <item
+        android:id="@+id/search"
+        android:contentDescription="@string/content_description_search"
+        android:icon="@drawable/search_icon"
+        android:title="@string/searchBar"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
     <item
         android:id="@+id/favorite"
         android:contentDescription="@string/content_description_favorite"
         android:icon="@drawable/ic_baseline_favorite_border_24"
         android:title="@string/favorite"
         app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/search"
-        android:contentDescription="@string/content_description_search"
-        android:icon="@drawable/search_icon"
-        android:title="@string/searchBar"
-        app:showAsAction="ifRoom" />
-
     <item
         android:id="@+id/deleteJob"
         android:icon="@drawable/ic_baseline_delete_outline_24"

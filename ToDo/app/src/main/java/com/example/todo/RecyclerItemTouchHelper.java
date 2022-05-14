@@ -40,7 +40,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
             else {
                 new MaterialAlertDialogBuilder(toDoAdapter.getContext())
                         .setTitle("Xác nhận")
-                        .setMessage("Bạn có chắc chắn đăng xuất ?")
+                        .setMessage("Bạn chắc chắn xoá vĩnh viễn không ?")
                         .setNegativeButton("Huỷ", (dialogInterface, i) -> {
                             toDoAdapter.notifyItemChanged(viewHolder.getBindingAdapterPosition());
                         })
